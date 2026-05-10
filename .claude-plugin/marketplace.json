@@ -1,0 +1,14 @@
+{
+  "metadata": { "pluginRoot": "." },
+  "plugins": [
+    {
+      "name": "autoresearch",
+      "source": ".",
+      "skills": [
+        "./skills/autoresearch-method",
+        "./skills/autoresearch-verify",
+        "./skills/autoresearch-program"
+      ]
+    }
+  ]
+}
