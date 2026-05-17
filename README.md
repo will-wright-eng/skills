@@ -6,7 +6,7 @@
 bunx skills add https://github.com/will-wright-eng/skills
 ```
 
-This installs the `autoresearch` plugin and all three skills via the [vercel-labs/skills](https://github.com/vercel-labs/skills) CLI.
+This command uses the [vercel-labs/skills](https://github.com/vercel-labs/skills) CLI to implement skills in this repo.
 
 ## Autoresearch
 
