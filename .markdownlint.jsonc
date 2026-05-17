@@ -1,0 +1,10 @@
+// managed by terraform — do not edit manually
+{
+  "default": true,
+  // line length
+  "MD013": false,
+  // inline HTML
+  "MD033": false,
+  // first line in file should be a top-level heading
+  "MD041": false
+}
