@@ -26,3 +26,7 @@ Replicated from [mattpocock/skills](https://github.com/mattpocock/skills/tree/ma
 | `grill-with-docs` | Interview-style session that stress-tests a plan against the project's domain language and updates `CONTEXT.md` / ADRs inline as decisions crystallise. |
 
 `improve-codebase-architecture` references `grill-with-docs` for `CONTEXT.md` and ADR format docs, so the two skills are designed to be installed together.
+
+## Other Repos
+
+- [Learning Opportunities: A Claude Code and Codex Skill for Deliberate Skill Development](https://github.com/DrCatHicks/learning-opportunities)
