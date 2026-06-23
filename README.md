@@ -31,6 +31,22 @@ From [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/e
 
 `improve-codebase-architecture` references `grill-with-docs` for `CONTEXT.md` and ADR format docs, so the two skills are designed to be installed together.
 
+## Productivity
+
+From [mattpocock/skills](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md) — replicated locally to reduce prompt-injection risk.
+
+| Skill | Purpose |
+|---|---|
+| `grill-me` | Relentless, one-question-at-a-time interview that stress-tests a plan or design before you build, recommending an answer for each decision and exploring the codebase when it can answer a question itself. |
+
+## Communication
+
+From [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman/blob/main/skills/caveman/SKILL.md) — replicated locally to reduce prompt-injection risk.
+
+| Skill | Purpose |
+|---|---|
+| `caveman` | Ultra-compressed response mode — cuts token usage ~75% by stripping articles, filler, and hedging while keeping full technical accuracy. Supports `lite` / `full` / `ultra` and 文言文 (`wenyan-*`) intensity levels. |
+
 ## Other Repos
 
 - [Learning Opportunities: A Claude Code and Codex Skill for Deliberate Skill Development](https://github.com/DrCatHicks/learning-opportunities)
