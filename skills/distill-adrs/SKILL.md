@@ -32,7 +32,7 @@ Most repos have a single set:
 
 If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts, each with its own `docs/adr/`. Place each ADR with the context it belongs to; system-wide decisions go in the root `docs/adr/`.
 
-Read all existing ADRs before extracting so you can detect duplicates and contradictions. Create `docs/adr/` lazily — only when the first approved ADR is written. Use the format in [ADR-FORMAT.md](../grill-with-docs/ADR-FORMAT.md).
+Read all existing ADRs before extracting so you can detect duplicates and contradictions. Create `docs/adr/` lazily — only when the first approved ADR is written. Use the format in [ADR-FORMAT.md](./ADR-FORMAT.md).
 
 ## The pipeline
 
