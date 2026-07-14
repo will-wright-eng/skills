@@ -8,9 +8,11 @@ bunx skills add https://github.com/will-wright-eng/skills
 
 This command uses the [vercel-labs/skills](https://github.com/vercel-labs/skills) CLI to implement skills in this repo.
 
-## Autoresearch
+## Original Skills
 
-A Claude Code plugin that ships three sequential skills for adding a verifiable autonomous experiment loop to a git repository, generalized from [karpathy/autoresearch](https://github.com/karpathy/autoresearch).
+### Autoresearch
+
+Three sequential skills for adding a verifiable autonomous experiment loop to a git repository, generalized from [karpathy/autoresearch](https://github.com/karpathy/autoresearch).
 
 After install, invoke them in order: `autoresearch-method` → `autoresearch-verify` → `autoresearch-program`. Once `program.md` is generated, hand it to a fresh agent session and the loop runs from there.
 
@@ -20,31 +22,42 @@ After install, invoke them in order: `autoresearch-method` → `autoresearch-ver
 | `autoresearch-verify` | Build a repo-specific verifier script with `light` (per-candidate metric) and `heavy` (integrity matrix) modes. |
 | `autoresearch-program` | Generate `program.md` at the repo root — the operating directive a fresh agent session uses to run the loop. |
 
-## Architecture
+### Design & Documentation
 
-From [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering) — replicating third-party skills (after reading them) reduces prompt-injection risk versus installing from a remote source that can change underneath you. `distill-adrs`, `create-context`, and `design-readiness` are original, self-contained companion skills.
+Self-contained skills covering the design-doc lifecycle: verify a design before building, distill what was built into ADRs, and keep the domain glossary sharp. Each writes only on explicit confirmation.
+
+| Skill | Purpose |
+|---|---|
+| `design-readiness` | Audit a design/implementation/proposal doc for consistency with the codebase and completeness of definition, then interview through drift fixes and open design decisions, delivering a revised draft on approval. |
+| `distill-adrs` | Distill existing implementation docs (plans, design docs, RFCs) into ADRs — extracts candidate decisions, verifies each against the code, and confirms them one at a time before writing. |
+| `create-context` | Build or refine a `CONTEXT.md` glossary — explores the codebase for candidate domain terms, then confirms each term, relationship, and ambiguity one at a time before writing. |
+
+## Replicated Skills
+
+Copied verbatim from their source repos — replicating third-party skills (after reading them) reduces prompt-injection risk versus installing from a remote source that can change underneath you.
+
+### Architecture
+
+From [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering).
 
 | Skill | Purpose |
 |---|---|
 | `improve-codebase-architecture` | Surface deepening opportunities — refactors that turn shallow modules into deep ones, using a fixed architectural vocabulary. |
 | `grill-with-docs` | Interview-style session that stress-tests a plan against the project's domain language and updates `CONTEXT.md` / ADRs inline as decisions crystallise. |
-| `distill-adrs` | Distill existing implementation docs (plans, design docs, RFCs) into ADRs — extracts candidate decisions, verifies each against the code, and confirms them one at a time before writing. |
-| `create-context` | Build or refine a `CONTEXT.md` glossary — explores the codebase for candidate domain terms, then confirms each term, relationship, and ambiguity one at a time before writing. |
-| `design-readiness` | Audit a design/implementation/proposal doc for consistency with the codebase and completeness of definition, then interview through drift fixes and open design decisions, delivering a revised draft on approval. |
 
-`improve-codebase-architecture` references `grill-with-docs` for `CONTEXT.md` and ADR format docs, so those two skills are designed to be installed together. `distill-adrs` and `create-context` carry their own copies of the format docs and install standalone.
+`improve-codebase-architecture` references `grill-with-docs` for `CONTEXT.md` and ADR format docs, so the two skills are designed to be installed together.
 
-## Productivity
+### Productivity
 
-From [mattpocock/skills](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md) — replicated locally to reduce prompt-injection risk.
+From [mattpocock/skills](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md).
 
 | Skill | Purpose |
 |---|---|
 | `grill-me` | Relentless, one-question-at-a-time interview that stress-tests a plan or design before you build, recommending an answer for each decision and exploring the codebase when it can answer a question itself. |
 
-## Communication
+### Communication
 
-From [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman/blob/main/skills/caveman/SKILL.md) — replicated locally to reduce prompt-injection risk.
+From [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman/blob/main/skills/caveman/SKILL.md).
 
 | Skill | Purpose |
 |---|---|

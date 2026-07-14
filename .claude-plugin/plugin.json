@@ -3,6 +3,13 @@
   "skills": [
     "./skills/autoresearch-method",
     "./skills/autoresearch-verify",
-    "./skills/autoresearch-program"
+    "./skills/autoresearch-program",
+    "./skills/design-readiness",
+    "./skills/distill-adrs",
+    "./skills/create-context",
+    "./skills/improve-codebase-architecture",
+    "./skills/grill-with-docs",
+    "./skills/grill-me",
+    "./skills/caveman"
   ]
 }
