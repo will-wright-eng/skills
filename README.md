@@ -8,6 +8,14 @@ bunx skills add https://github.com/will-wright-eng/skills
 
 This command uses the [vercel-labs/skills](https://github.com/vercel-labs/skills) CLI to implement skills in this repo.
 
+## Update
+
+```bash
+bunx skills update
+```
+
+Updates all installed skills; pass a name to update one (`bunx skills update design-readiness`). The CLI has no version pinning — `update` re-fetches whatever is at the head of each source repo — so review the diff after updating.
+
 ## Original Skills
 
 ### Autoresearch
