@@ -5,7 +5,7 @@ description: Audit a design/implementation/proposal markdown document for consis
 
 <what-to-do>
 
-Audit the markdown document I point you at against the codebase and the repo's documented context — ADRs (typically `docs/adr/`) and `CONTEXT.md` in the repo root — then interview me — one question at a time, with your recommended answer — until every drifted claim and unresolved design decision is settled. Collect resolutions as we go; do not edit the document during the interview. My interview answers are the approval: when the interview is complete, apply one revised draft of the full document and show me what changed.
+Audit the markdown document I point you at against the codebase and the repo's documented context — Architecture Decision Records (ADRs, typically in `docs/adr/`) and `CONTEXT.md` in the repo root — then interview me — one question at a time, with your recommended answer — until every drifted claim and unresolved design decision is settled. Collect resolutions as we go; do not edit the document during the interview. My interview answers are the approval: when the interview is complete, apply one revised draft of the full document and show me what changed.
 
 </what-to-do>
 
