@@ -41,7 +41,7 @@ Read the repo and ask the human as needed. Settle every value before substitutin
 ## Placeholder map
 
 | Placeholder | Replaced by |
-|---|---|
+| --- | --- |
 | `{{MUTABLE_SCOPE}}` | Mutable scope bullets |
 | `{{IMMUTABLE_SCOPE}}` | Immutable scope bullets |
 | `{{BRANCH_PREFIX}}` | Branch prefix |

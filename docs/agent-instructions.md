@@ -22,7 +22,7 @@ If you are an agent reading this file, your task depends on which **phase** the 
 ## Directory Contents (`.autoverify/`, reference only)
 
 | File | Purpose |
-|---|---|
+| --- | --- |
 | `agent-instructions.md` | This file. Orientation for any agent that opens `.autoverify/`. |
 | `program.md` | Template operating directive. The adoption agent copies this verbatim into the harness directory; the loop agent follows the copy literally. |
 | `result.schema.json` | Normalized JSON contract every candidate result must satisfy. The adoption agent copies this verbatim into the harness directory. |
@@ -35,7 +35,7 @@ If you are an agent reading this file, your task depends on which **phase** the 
 The adoption agent creates a working directory at the root of the target repository (default name: `autoresearch/`, or another name appropriate to the project). Everything the loop agent reads and writes lives inside it.
 
 | File | Origin | Purpose |
-|---|---|---|
+| --- | --- | --- |
 | `<harness>/program.md` | copied verbatim from `.autoverify/program.md` | Operating directive followed by the loop agent. |
 | `<harness>/result.schema.json` | copied verbatim from `.autoverify/result.schema.json` | Result contract. |
 | `<harness>/adapter.md` | copied from `.autoverify/adapter.md`, then filled in | Project-specific objective, scopes, budget, runner command, acceptance rule. |
