@@ -16,6 +16,10 @@ bunx skills update
 
 Updates all installed skills; pass a name to update one (`bunx skills update design-readiness`). The CLI has no version pinning — `update` re-fetches whatever is at the head of each source repo — so review the diff after updating.
 
+## Skill Self-Containment
+
+Every skill in this repo installs standalone. Cross-skill file references (`../other-skill/DOC.md`) are an antipattern: the [skills CLI](https://github.com/vercel-labs/skills) installs skills individually (`--skill <name>`, `skills use`, direct skill URLs) with no dependency resolution, so a link into a sibling skill directory dangles unless the whole repo happens to be installed. Shared docs are instead vendored into each skill that needs them, marked with a provenance comment (`<!-- Vendored verbatim from ... -->`). Vendored copies are updated by re-copying their source, never by editing in place.
+
 ## Original Skills
 
 ### Autoresearch
@@ -46,7 +50,7 @@ Self-contained skills covering the design-doc lifecycle: verify a design before 
 | --- | --- |
 | `anneal` | Carve a god module into stable and volatile pieces along evidence from git history — hotspot ranking via the [hc](https://github.com/will-wright-eng/hc) CLI (raw-git fallback when absent), a three-axis autopsy of the target file, a seam-by-seam interview, and a strangler-fig migration plan with a measurable baseline. |
 
-Installs standalone: it vendors copies of `improve-codebase-architecture`'s LANGUAGE.md (architectural vocabulary) and `grill-with-docs`'s ADR-FORMAT.md, since the skills CLI has no cross-skill dependency resolution.
+Vendors copies of `improve-codebase-architecture`'s LANGUAGE.md (architectural vocabulary) and `grill-with-docs`'s ADR-FORMAT.md — see [Skill Self-Containment](#skill-self-containment).
 
 ## Replicated Skills
 
@@ -61,7 +65,7 @@ From [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/e
 | `improve-codebase-architecture` | Surface deepening opportunities — refactors that turn shallow modules into deep ones, using a fixed architectural vocabulary. |
 | `grill-with-docs` | Interview-style session that stress-tests a plan against the project's domain language and updates `CONTEXT.md` / ADRs inline as decisions crystallise. |
 
-Upstream, `improve-codebase-architecture` linked to `grill-with-docs` for its `CONTEXT.md` and ADR format docs; this repo vendors copies of those docs into the skill so it installs standalone. The two repointed link paths are the only local deviation from the replicated source.
+Upstream, `improve-codebase-architecture` linked to `grill-with-docs` for its `CONTEXT.md` and ADR format docs; this repo vendors copies of those docs into the skill instead (see [Skill Self-Containment](#skill-self-containment)). The two repointed link paths are the only local deviation from the replicated source.
 
 ### Productivity
 
