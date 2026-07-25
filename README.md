@@ -1,5 +1,7 @@
 # will-wright-eng skills
 
+Browse this collection on [skills.sh](https://www.skills.sh/will-wright-eng/skills), including per-skill security audits.
+
 ## Install
 
 ```bash
