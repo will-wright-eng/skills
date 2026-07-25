@@ -1,6 +1,8 @@
+<!-- Vendored verbatim from skills/grill-with-docs/ADR-FORMAT.md so improve-codebase-architecture installs standalone (the skills CLI has no cross-skill dependency resolution). Update by re-copying the source, not by editing here. -->
+
 # ADR Format
 
-Architecture Decision Records (ADRs) live in `docs/adr/` and use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc.
+ADRs live in `docs/adr/` and use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc.
 
 Create the `docs/adr/` directory lazily — only when the first ADR is needed.
 
@@ -26,16 +28,15 @@ Only include these when they add genuine value. Most ADRs won't need them.
 
 Scan `docs/adr/` for the highest existing number and increment by one.
 
-## When a distilled decision qualifies
+## When to offer an ADR
 
-All four of these must be true:
+All three of these must be true:
 
 1. **Hard to reverse** — the cost of changing your mind later is meaningful
 2. **Surprising without context** — a future reader will look at the code and wonder "why on earth did they do it this way?"
-3. **The result of a real trade-off** — there were genuine alternatives and one was picked for specific reasons
-4. **The code reflects the decision** — the codebase implements what the source document describes, and the area is stable
+3. **The result of a real trade-off** — there were genuine alternatives and you picked one for specific reasons
 
-If a decision is easy to reverse, skip it — you'll just reverse it. If it's not surprising, nobody will wonder why. If there was no real alternative, there's nothing to record beyond "we did the obvious thing." And if the code deviates from the source document, the ADR would describe a state the code isn't in — reject it and report the deviation instead.
+If a decision is easy to reverse, skip it — you'll just reverse it. If it's not surprising, nobody will wonder why. If there was no real alternative, there's nothing to record beyond "we did the obvious thing."
 
 ### What qualifies
 
@@ -46,9 +47,3 @@ If a decision is easy to reverse, skip it — you'll just reverse it. If it's no
 - **Deliberate deviations from the obvious path.** "We're using manual SQL instead of an ORM because X." Anything where a reasonable reader would assume the opposite. These stop the next engineer from "fixing" something that was deliberate.
 - **Constraints not visible in the code.** "We can't use AWS because of compliance requirements." "Response times must be under 200ms because of the partner API contract."
 - **Rejected alternatives when the rejection is non-obvious.** If you considered GraphQL and picked REST for subtle reasons, record it — otherwise someone will suggest GraphQL again in six months.
-
-## References
-
-- [ADR GitHub organization](https://adr.github.io/) — canonical home for ADR concepts, templates, and tooling
-- [Architectural decision — Wikipedia](https://en.wikipedia.org/wiki/Architectural_decision)
-- [Architecturally significant requirements — Wikipedia](https://en.wikipedia.org/wiki/Architecturally_significant_requirements)

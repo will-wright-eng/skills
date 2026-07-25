@@ -32,7 +32,7 @@ Yes: "Bug in auth middleware. Token expiry check use `<` not `<=`. Fix:"
 ## Intensity
 
 | Level | What change |
-|-------|------------|
+| ------- | ------------ |
 | **lite** | No filler/hedging. Keep articles + full sentences. Professional but tight |
 | **full** | Drop articles, fragments OK, short synonyms. Classic caveman. No tool-call narration, no decorative tables/emoji, no long raw error-log dumps unless asked. Standard acronyms OK; no invented abbreviations |
 | **ultra** | Abbreviate prose words (DB/auth/config/req/res/fn/impl) — prose words only, never real code symbols/function names. Strip conjunctions, arrows for causality (X → Y), one word when one word enough. Code symbols, function names, API names, error strings: never abbreviate |

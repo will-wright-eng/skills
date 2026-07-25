@@ -1,11 +1,11 @@
 ---
 name: distill-adrs
-description: Distill existing implementation markdown documents (plans, design docs, RFCs) into ADRs. Extracts candidate decisions, verifies each against the code, and confirms them one at a time before writing. Use when implementation docs have accumulated and the durable decisions inside them should be captured as ADRs.
+description: Distill existing implementation markdown documents (plans, design docs, RFCs) into Architecture Decision Records (ADRs). Extracts candidate decisions, verifies each against the code, and confirms them one at a time before writing. Use when implementation docs have accumulated and the durable decisions inside them should be captured as ADRs.
 ---
 
 <what-to-do>
 
-Distill the implementation documents I point you at into ADRs. Extract every candidate decision, filter with the four-part test below — including verifying each survivor against the code — then walk me through the survivors one at a time. I approve, edit, or reject each before you write it.
+Distill the implementation documents I point you at into Architecture Decision Records (ADRs). Extract every candidate decision, filter with the four-part test below — including verifying each survivor against the code — then walk me through the survivors one at a time. I approve, edit, or reject each before you write it.
 
 Never write an ADR without my approval of that specific ADR.
 
@@ -21,7 +21,7 @@ I provide the source documents: file paths or a directory of implementation mark
 
 Most repos have a single set:
 
-```
+```text
 /
 ├── docs/
 │   └── adr/
@@ -75,5 +75,13 @@ When all candidates are processed, report:
 - **Duplicates and conflicts** — candidates already covered by, or contradicting, existing ADRs
 
 Then propose archival: list the source documents whose durable content is now fully captured in ADRs and could be archived or deleted, and the ones that still contain undistilled material. Never delete or move anything yourself — I decide.
+
+## References
+
+Consult these canonical sources when it is unclear what an ADR is, or how ADRs relate to Architecturally Significant Requirements (ASRs):
+
+- [ADR GitHub organization](https://adr.github.io/) — canonical home for ADR concepts, templates, and tooling
+- [Architectural decision — Wikipedia](https://en.wikipedia.org/wiki/Architectural_decision)
+- [Architecturally significant requirements — Wikipedia](https://en.wikipedia.org/wiki/Architecturally_significant_requirements)
 
 </supporting-info>
