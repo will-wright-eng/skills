@@ -61,7 +61,7 @@ From [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/e
 | `improve-codebase-architecture` | Surface deepening opportunities — refactors that turn shallow modules into deep ones, using a fixed architectural vocabulary. |
 | `grill-with-docs` | Interview-style session that stress-tests a plan against the project's domain language and updates `CONTEXT.md` / ADRs inline as decisions crystallise. |
 
-`improve-codebase-architecture` references `grill-with-docs` for `CONTEXT.md` and ADR format docs, so the two skills are designed to be installed together.
+Upstream, `improve-codebase-architecture` linked to `grill-with-docs` for its `CONTEXT.md` and ADR format docs; this repo vendors copies of those docs into the skill so it installs standalone. The two repointed link paths are the only local deviation from the replicated source.
 
 ### Productivity
 
