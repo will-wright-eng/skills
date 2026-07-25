@@ -32,6 +32,8 @@ Before asking anything, explore the codebase for raw material:
 - competing synonyms — the same concept under different names (`user` vs `account` vs `customer`)
 - overloaded terms — one name carrying two meanings in different places
 
+Skip secret-bearing files while exploring (`.env*`, keys, certificates, credential stores, CI secrets) — domain language never lives there.
+
 Build the candidate list from this. General programming concepts (timeouts, retries, error types, utility patterns) are not candidates — only concepts specific to this project's domain qualify, per CONTEXT-FORMAT.md.
 
 ## Phase 2: decompose the language
@@ -41,7 +43,7 @@ Work through the candidates one at a time, waiting for my verdict before continu
 - the canonical name — with your recommendation when the code uses several
 - a one-sentence definition — what it IS, not what it does
 - the aliases to avoid
-- the code evidence supporting (or contradicting) your proposal
+- the code evidence supporting (or contradicting) your proposal — identifier names and `file:line` references, never quoted values
 
 Challenge me while we work:
 
@@ -62,6 +64,7 @@ Once the glossary stabilises:
 ## Rules
 
 - One question at a time. Always state your recommended answer.
+- Evidence is names and locations, never values. Never reproduce secrets or sensitive configuration values (API keys, tokens, passwords, connection strings) in questions, evidence, or `CONTEXT.md` — refer to them by identifier and `file:line` only.
 - If a question can be answered by exploring the codebase, explore instead of asking.
 - `CONTEXT.md` stays a glossary: no implementation details, no specs, no decisions. Decisions belong in ADRs, not here.
 - Follow the structure and rules in CONTEXT-FORMAT.md exactly.
