@@ -78,9 +78,9 @@ If hc ships `--coupling` ([proposal 012](https://github.com/will-wright-eng/hc/b
 Work through proposed seams one question at a time, waiting for my answer, recommendation stated first:
 
 - For each seam: the evidence (which axes agree), the symbols on each side, and the question — **is this coupling essential or incidental?** Co-change data lies (formatting sweeps, shotgun refactors), so my confirmation is the filter.
-- Name proposed pieces with the domain vocabulary in `CONTEXT.md` if present; describe the architecture with the vocabulary in [LANGUAGE.md](../improve-codebase-architecture/LANGUAGE.md) — deep/shallow, seam, locality, leverage. The stable core should come out **deep**: a lot of behavior behind a small interface.
+- Name proposed pieces with the domain vocabulary in `CONTEXT.md` if present; describe the architecture with the vocabulary in [LANGUAGE.md](./LANGUAGE.md) — deep/shallow, seam, locality, leverage. The stable core should come out **deep**: a lot of behavior behind a small interface.
 - If a question can be answered by exploring the codebase, explore instead of asking.
-- If I reject a seam with a load-bearing reason, offer to record it as an ADR (see [ADR-FORMAT.md](../grill-with-docs/ADR-FORMAT.md)) so a future session doesn't re-propose it. Skip ephemeral reasons.
+- If I reject a seam with a load-bearing reason, offer to record it as an ADR (see [ADR-FORMAT.md](./ADR-FORMAT.md)) so a future session doesn't re-propose it. Skip ephemeral reasons.
 
 Collect resolutions as we go; write nothing yet.
 

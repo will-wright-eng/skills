@@ -46,7 +46,7 @@ Self-contained skills covering the design-doc lifecycle: verify a design before 
 | --- | --- |
 | `anneal` | Carve a god module into stable and volatile pieces along evidence from git history — hotspot ranking via the [hc](https://github.com/will-wright-eng/hc) CLI (raw-git fallback when absent), a three-axis autopsy of the target file, a seam-by-seam interview, and a strangler-fig migration plan with a measurable baseline. |
 
-Uses `improve-codebase-architecture`'s LANGUAGE.md for architectural vocabulary and `grill-with-docs`'s ADR format doc, so those skills should be installed alongside it.
+Installs standalone: it vendors copies of `improve-codebase-architecture`'s LANGUAGE.md (architectural vocabulary) and `grill-with-docs`'s ADR-FORMAT.md, since the skills CLI has no cross-skill dependency resolution.
 
 ## Replicated Skills
 
