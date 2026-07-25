@@ -11,9 +11,11 @@ A collection of Claude Code skills, packaged as a plugin (`.claude-plugin/plugin
 This repo uses [prek](https://github.com/j178/prek) (a pre-commit-compatible runner) with the standard `.pre-commit-config.yaml`.
 
 ```bash
-prek run --all-files   # lint: markdownlint (--fix, non-blocking), codespell, whitespace/EOF fixers
+prek run --all-files   # lint: markdownlint (--fix, non-blocking), codespell, whitespace/EOF fixers, agentskills spec validation
 prek install           # one-time hook setup
 ```
+
+Skill directories are validated against the [agentskills.io spec](https://agentskills.io/specification) via `uvx --from skills-ref agentskills validate skills/<name>` — run locally by the `agentskills-validate` prek hook (requires `uv`) and in CI by `.github/workflows/validate-skills.yml`.
 
 Codespell false positives go in `.codespell-ignore`. Markdownlint disables MD013 (line length), MD033 (inline HTML), and MD041 (first-line heading).
 

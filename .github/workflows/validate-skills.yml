@@ -1,0 +1,31 @@
+name: Validate skills
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "skills/**"
+      - ".github/workflows/validate-skills.yml"
+  pull_request:
+    paths:
+      - "skills/**"
+      - ".github/workflows/validate-skills.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v9
+
+      - name: Validate all skills
+        run: |
+          fail=0
+          for d in skills/*/; do
+            uvx --from skills-ref==0.1.1 agentskills validate "$d" || fail=1
+          done
+          exit $fail

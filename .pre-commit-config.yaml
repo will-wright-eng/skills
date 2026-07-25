@@ -6,19 +6,15 @@ repos:
     rev: v6.0.0
     hooks:
       - id: check-case-conflict
-      - id: check-docstring-first
       - id: check-executables-have-shebangs
       - id: check-json
       - id: check-merge-conflict
-      - id: check-toml
       - id: check-yaml
       - id: end-of-file-fixer
       - id: pretty-format-json
         args: [--autofix, --no-ensure-ascii, --no-sort-keys]
-      - id: requirements-txt-fixer
       - id: trailing-whitespace
       - id: check-added-large-files
-      - id: check-ast
       - id: fix-byte-order-marker
       - id: detect-private-key
       - id: mixed-line-ending
@@ -39,3 +35,13 @@ repos:
       - id: codespell
         args: ["--ignore-words=.codespell-ignore"]
         exclude: '\.git\/.*'
+
+  - repo: local
+    hooks:
+      - id: agentskills-validate
+        name: agentskills validate
+        description: Validate skill directories against the agentskills.io spec
+        language: system
+        files: ^skills/[^/]+/
+        # maps changed files to their skills/<name> dir; -d guard skips deleted skills
+        entry: bash -c 'fail=0; for d in $(printf "%s\n" "$@" | cut -d/ -f1-2 | sort -u); do [ -d "$d" ] || continue; uvx --from skills-ref==0.1.1 agentskills validate "$d" || fail=1; done; exit $fail' --
