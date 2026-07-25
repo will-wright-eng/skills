@@ -40,6 +40,14 @@ Self-contained skills covering the design-doc lifecycle: verify a design before 
 | `distill-adrs` | Distill existing implementation docs (plans, design docs, RFCs) into ADRs — extracts candidate decisions, verifies each against the code, and confirms them one at a time before writing. |
 | `create-context` | Build or refine a `CONTEXT.md` glossary — explores the codebase for candidate domain terms, then confirms each term, relationship, and ambiguity one at a time before writing. |
 
+### Refactoring
+
+| Skill | Purpose |
+| --- | --- |
+| `anneal` | Carve a god module into stable and volatile pieces along evidence from git history — hotspot ranking via the [hc](https://github.com/will-wright-eng/hc) CLI (raw-git fallback when absent), a three-axis autopsy of the target file, a seam-by-seam interview, and a strangler-fig migration plan with a measurable baseline. |
+
+Uses `improve-codebase-architecture`'s LANGUAGE.md for architectural vocabulary and `grill-with-docs`'s ADR format doc, so those skills should be installed alongside it.
+
 ## Replicated Skills
 
 Copied verbatim from their source repos — replicating third-party skills (after reading them) reduces prompt-injection risk versus installing from a remote source that can change underneath you.
