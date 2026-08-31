@@ -8,6 +8,7 @@
     "./skills/distill-adrs",
     "./skills/create-context",
     "./skills/anneal",
+    "./skills/prune-comments",
     "./skills/improve-codebase-architecture",
     "./skills/grill-with-docs",
     "./skills/grill-me",
