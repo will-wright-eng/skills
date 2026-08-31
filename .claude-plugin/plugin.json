@@ -12,6 +12,7 @@
     "./skills/improve-codebase-architecture",
     "./skills/grill-with-docs",
     "./skills/grill-me",
-    "./skills/caveman"
+    "./skills/caveman",
+    "./skills/karpathy-guidelines"
   ]
 }
