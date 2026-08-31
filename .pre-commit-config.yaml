@@ -36,6 +36,17 @@ repos:
         args: ["--ignore-words=.codespell-ignore"]
         exclude: '\.git\/.*'
 
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1-1
+    hooks:
+      - id: shellcheck
+
+  - repo: https://github.com/maxwinterstein/shfmt-py
+    rev: v4.1.0
+    hooks:
+      - id: shfmt
+        args: [-w, -i, "2", -ci]
+
   - repo: https://github.com/zizmorcore/zizmor-pre-commit
     rev: v1.28.0
     hooks:

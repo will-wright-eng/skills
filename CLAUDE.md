@@ -11,7 +11,7 @@ A collection of Claude Code skills, packaged as a plugin (`.claude-plugin/plugin
 This repo uses [prek](https://github.com/j178/prek) (a pre-commit-compatible runner) with the standard `.pre-commit-config.yaml`.
 
 ```bash
-prek run --all-files   # lint: markdownlint (--fix, non-blocking), codespell, whitespace/EOF fixers, agentskills spec validation
+prek run --all-files   # lint: markdownlint (--fix, non-blocking), codespell, shellcheck, shfmt (-w), whitespace/EOF fixers, agentskills spec validation
 prek install           # one-time hook setup
 ```
 

@@ -13,7 +13,7 @@ SKILLS_REF="skills-ref==0.1.1"
 CLAUDE_CODE_FIELDS='agent|argument-hint|arguments|background|context|disable-model-invocation|disallowed-tools|effort|hooks|model|paths|shell|user-invocable|when_to_use'
 
 fail=0
-for d in $(printf '%s\n' "$@" | cut -d/ -f1-2 | sort -u); do
+while IFS= read -r d; do
   [ -f "$d/SKILL.md" ] || continue
   tmp=$(mktemp -d)
   cp -R "$d" "$tmp/"
@@ -26,9 +26,9 @@ for d in $(printf '%s\n' "$@" | cut -d/ -f1-2 | sort -u); do
     fm && skip && /^[ \t]/ { next }
     fm                     { skip = 0; print; next }
     { print }
-  ' "$d/SKILL.md" > "$copy/SKILL.md"
+  ' "$d/SKILL.md" >"$copy/SKILL.md"
   out=$(uvx --from "$SKILLS_REF" agentskills validate "$copy" 2>&1) || fail=1
-  printf '%s\n' "${out//$copy/$d}"
+  printf '%s\n' "${out//"$copy"/$d}"
   rm -rf "$tmp"
-done
+done < <(printf '%s\n' "$@" | cut -d/ -f1-2 | sort -u)
 exit $fail
