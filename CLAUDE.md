@@ -15,7 +15,7 @@ prek run --all-files   # lint: markdownlint (--fix, non-blocking), codespell, wh
 prek install           # one-time hook setup
 ```
 
-Skill directories are validated against the [agentskills.io spec](https://agentskills.io/specification) via `python3 scripts/validate_skill.py skills/<name>` — run locally by the `agentskills-validate` prek hook (requires `uv`) and in CI by `.github/workflows/validate-skills.yml`. The script strips Claude Code frontmatter extensions (`argument-hint`, `context`, etc. — see `CLAUDE_CODE_FIELDS` in the script) from a temp copy before running `uvx --from skills-ref agentskills validate`, since the spec disallows them; skills using those fields are a deliberate spec deviation and can't be uploaded to claude.ai as-is.
+Skill directories are validated against the [agentskills.io spec](https://agentskills.io/specification) via `bash scripts/validate_skill.sh skills/<name>` — run locally by the `agentskills-validate` prek hook (requires `uv`) and in CI by `.github/workflows/validate-skills.yml`. The script strips Claude Code frontmatter extensions (`argument-hint`, `context`, etc. — see `CLAUDE_CODE_FIELDS` in the script) from a temp copy before running `uvx --from skills-ref agentskills validate`, since the spec disallows them; skills using those fields are a deliberate spec deviation and can't be uploaded to claude.ai as-is.
 
 Codespell false positives go in `.codespell-ignore`. Markdownlint disables MD013 (line length), MD033 (inline HTML), MD041 (first-line heading), and MD003/MD020/MD021 — headings ending in `#` (e.g. `## C#`) are misparsed as closed ATX, which the MD020 fixer mangles and MD003 false-flags.
 

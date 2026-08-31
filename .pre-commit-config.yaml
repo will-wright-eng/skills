@@ -48,4 +48,4 @@ repos:
         description: Validate skill directories against the agentskills.io spec (Claude Code frontmatter extensions stripped first)
         language: system
         files: ^skills/[^/]+/
-        entry: python3 scripts/validate_skill.py
+        entry: bash scripts/validate_skill.sh
