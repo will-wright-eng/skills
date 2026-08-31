@@ -45,8 +45,7 @@ repos:
     hooks:
       - id: agentskills-validate
         name: agentskills validate
-        description: Validate skill directories against the agentskills.io spec
+        description: Validate skill directories against the agentskills.io spec (Claude Code frontmatter extensions stripped first)
         language: system
         files: ^skills/[^/]+/
-        # maps changed files to their skills/<name> dir; -d guard skips deleted skills
-        entry: bash -c 'fail=0; for d in $(printf "%s\n" "$@" | cut -d/ -f1-2 | sort -u); do [ -d "$d" ] || continue; uvx --from skills-ref==0.1.1 agentskills validate "$d" || fail=1; done; exit $fail' --
+        entry: python3 scripts/validate_skill.py

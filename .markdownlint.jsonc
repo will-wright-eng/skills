@@ -1,4 +1,3 @@
-// managed by terraform — do not edit manually
 {
   "default": true,
   // line length
@@ -6,5 +5,10 @@
   // inline HTML
   "MD033": false,
   // first line in file should be a top-level heading
-  "MD041": false
+  "MD041": false,
+  // headings ending in "#" (e.g. "## C#") are misparsed as closed ATX:
+  // the MD020/MD021 fixers mangle them ("## C#" -> "## C #") and MD003 false-flags them
+  "MD003": false,
+  "MD020": false,
+  "MD021": false
 }

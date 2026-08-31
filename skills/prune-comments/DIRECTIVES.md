@@ -81,7 +81,7 @@ Comments that tooling reads. Deleting or rewording any of these changes program,
 | Lint suppressions | `// noinspection` (IntelliJ), `// CHECKSTYLE:OFF/ON`, `//NOSONAR`, `@SuppressWarnings` in Javadoc position |
 | Docs | Javadoc / KDoc on public API — condense prose, keep tags |
 
-## C #
+## C#
 
 | Category | Patterns |
 | --- | --- |

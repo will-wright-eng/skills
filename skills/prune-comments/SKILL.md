@@ -1,6 +1,7 @@
 ---
 name: prune-comments
 description: Remove redundant comments from code files — deletes narration that restates the code, condenses questionably load-bearing comments to minimal technical language, and never touches semantic comments (directives, pragmas, shebangs, license headers) or genuine why-comments. Scopes to the diff against main (or a named base branch) by default, or sweeps a named path; modifies comments only, never code, and never markdown/docs. Use when comments are noisy or redundant — "remove redundant comments", "clean up the comments", "prune comments", "strip unnecessary comments", "too many AI comments".
+argument-hint: "[<base-branch>|<path>]"
 ---
 
 <what-to-do>
