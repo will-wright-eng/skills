@@ -36,6 +36,17 @@ repos:
         args: ["--ignore-words=.codespell-ignore"]
         exclude: '\.git\/.*'
 
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1-1
+    hooks:
+      - id: shellcheck
+
+  - repo: https://github.com/maxwinterstein/shfmt-py
+    rev: v4.1.0
+    hooks:
+      - id: shfmt
+        args: [-w, -i, "2", -ci]
+
   - repo: https://github.com/zizmorcore/zizmor-pre-commit
     rev: v1.28.0
     hooks:
@@ -45,8 +56,7 @@ repos:
     hooks:
       - id: agentskills-validate
         name: agentskills validate
-        description: Validate skill directories against the agentskills.io spec
+        description: Validate skill directories against the agentskills.io spec (Claude Code frontmatter extensions stripped first)
         language: system
         files: ^skills/[^/]+/
-        # maps changed files to their skills/<name> dir; -d guard skips deleted skills
-        entry: bash -c 'fail=0; for d in $(printf "%s\n" "$@" | cut -d/ -f1-2 | sort -u); do [ -d "$d" ] || continue; uvx --from skills-ref==0.1.1 agentskills validate "$d" || fail=1; done; exit $fail' --
+        entry: bash scripts/validate_skill.sh
