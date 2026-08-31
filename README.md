@@ -86,6 +86,16 @@ From [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman/blob/main/
 | --- | --- |
 | `caveman` | Ultra-compressed response mode — cuts token usage ~75% by stripping articles, filler, and hedging while keeping full technical accuracy. Supports `lite` / `full` / `ultra` and 文言文 (`wenyan-*`) intensity levels. |
 
+### Coding Guidelines
+
+From [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/skills/karpathy-guidelines/SKILL.md).
+
+| Skill | Purpose |
+| --- | --- |
+| `karpathy-guidelines` | Behavioral guidelines to reduce common LLM coding mistakes, derived from [Andrej Karpathy's observations](https://x.com/karpathy/status/2015883857489522876) — think before coding, simplicity first, surgical changes, goal-driven execution. |
+
+Checked against Karpathy's 2026 public statements as of 2026-08-31: no conflicts. His [Sequoia Ascent talk (Aug 2026)](https://karpathy.bearblog.dev/sequoia-ascent-2026/) still criticizes agent output as "bloated, copy-pasted, awkwardly abstracted, brittle," and his ["agentic engineering" framing](https://singjupost.com/andrej-karpathy-from-vibe-coding-to-agentic-engineering-w-stephanie-zhan-transcript/) (spec design, eval design, diff review) maps onto the skill's goal-driven-execution guideline. The skill's caution bias reads slightly conservative next to his shift toward agent autonomy (~80% agent-written code, [AutoResearch](https://www.nextbigfuture.com/2026/03/andrej-karpathy-on-code-agents-autoresearch-and-the-self-improvement-loopy-era-of-ai.html)), but his answer to autonomy is verifiability, which is that same guideline. The source tweet (Jan 2026) postdates his vibe-coding-to-agentic-engineering shift.
+
 ## Other Repos
 
 - [Learning Opportunities: A Claude Code and Codex Skill for Deliberate Skill Development](https://github.com/DrCatHicks/learning-opportunities)
