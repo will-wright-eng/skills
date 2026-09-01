@@ -96,6 +96,10 @@ From [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-ka
 
 Checked against Karpathy's 2026 public statements as of 2026-08-31: no conflicts. His [Sequoia Ascent talk (Aug 2026)](https://karpathy.bearblog.dev/sequoia-ascent-2026/) still criticizes agent output as "bloated, copy-pasted, awkwardly abstracted, brittle," and his ["agentic engineering" framing](https://singjupost.com/andrej-karpathy-from-vibe-coding-to-agentic-engineering-w-stephanie-zhan-transcript/) (spec design, eval design, diff review) maps onto the skill's goal-driven-execution guideline. The skill's caution bias reads slightly conservative next to his shift toward agent autonomy (~80% agent-written code, [AutoResearch](https://www.nextbigfuture.com/2026/03/andrej-karpathy-on-code-agents-autoresearch-and-the-self-improvement-loopy-era-of-ai.html)), but his answer to autonomy is verifiability, which is that same guideline. The source tweet (Jan 2026) postdates his vibe-coding-to-agentic-engineering shift.
 
+## User-Level CLAUDE.md
+
+Skills in this repo handle task-level behavior; global preferences live in `~/.claude/CLAUDE.md`, which Claude Code applies to every project. That file is managed with [gists3](https://github.com/will-wright-eng/gists3) (`g3`), an S3-inspired CLI that treats a GitHub gist as a bucket and its files as keys — the canonical copy lives in [this gist](https://gist.github.com/will-wright-eng/b1e652a05136107f461cd796103508cc). `g3 link` creates the local working copy, and `g3 push` / `g3 pull` sync edits with guards against overwriting unseen remote changes, giving the file free versioned storage without a full dotfiles repo.
+
 ## Other Repos
 
 - [Learning Opportunities: A Claude Code and Codex Skill for Deliberate Skill Development](https://github.com/DrCatHicks/learning-opportunities)
