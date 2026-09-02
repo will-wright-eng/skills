@@ -51,7 +51,7 @@ Self-contained skills covering the design-doc lifecycle: verify a design before 
 | Skill | Purpose |
 | --- | --- |
 | `anneal` | Carve a god module into stable and volatile pieces along evidence from git history — hotspot ranking via the [hc](https://github.com/will-wright-eng/hc) CLI (raw-git fallback when absent), a three-axis autopsy of the target file, a seam-by-seam interview, and a strangler-fig migration plan with a measurable baseline. |
-| `prune-comments` | Delete comment narration that restates the code and condense questionably load-bearing comments to terse technical language — scoped to the diff against a base branch by default (path sweep on request), never touching semantic comments (directives, pragmas, license headers) or genuine why-comments, and modifying comments only: never code, never markdown. |
+| `prune-comments` | Aggressively delete comment narration that restates the code — including "pseudo-why" comments whose reason is already visible and step-heading comments over blocks — and condense verbose why-comments and doc comments to terse technical language; doubt resolves toward deletion. Scoped to the diff against a base branch by default (path sweep on request), optionally driven under a target comment ratio, never touching semantic comments (directives, pragmas, license headers) or genuine why-comments, and modifying comments only: never code, never markdown. |
 
 `anneal` vendors copies of `improve-codebase-architecture`'s LANGUAGE.md (architectural vocabulary) and `grill-with-docs`'s ADR-FORMAT.md — see [Skill Self-Containment](#skill-self-containment).
 
