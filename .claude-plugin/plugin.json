@@ -13,6 +13,7 @@
     "./skills/grill-with-docs",
     "./skills/grill-me",
     "./skills/caveman",
-    "./skills/karpathy-guidelines"
+    "./skills/karpathy-guidelines",
+    "./skills/ponytail"
   ]
 }

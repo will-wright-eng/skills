@@ -86,6 +86,14 @@ From [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman/blob/main/
 | --- | --- |
 | `caveman` | Ultra-compressed response mode — cuts token usage ~75% by stripping articles, filler, and hedging while keeping full technical accuracy. Supports `lite` / `full` / `ultra` and 文言文 (`wenyan-*`) intensity levels. |
 
+### Code Style
+
+From [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail/blob/main/skills/ponytail/SKILL.md). The upstream plugin also ships Node lifecycle hooks for always-on activation and a statusline badge; only the skill is replicated here.
+
+| Skill | Purpose |
+| --- | --- |
+| `ponytail` | Lazy senior dev mode — climbs a ladder (YAGNI → reuse → stdlib → native platform → installed dep → one line → minimum) before writing code, never cutting validation, error handling, security, or accessibility. Supports `lite` / `full` / `ultra` intensity levels. Pairs with `caveman`: ponytail governs the code, caveman governs the prose. |
+
 ### Coding Guidelines
 
 From [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/skills/karpathy-guidelines/SKILL.md).
