@@ -64,7 +64,7 @@ The kit has two layers: **immutable methodology** in `.autoverify/` (copied verb
 ### File roles
 
 | Location | File | Layer | Who fills it in | Purpose |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | `.autoverify/` | `agent-instructions.md` | reference | copied verbatim | Orientation. Identifies adoption vs loop phase and defines the protocol. |
 | `.autoverify/` | `program.md` | reference | copied verbatim | Template operating directive. Source for `<harness>/program.md`. |
 | `.autoverify/` | `result.schema.json` | reference | copied verbatim | Result contract. Source for `<harness>/result.schema.json`. |

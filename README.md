@@ -1,5 +1,7 @@
 # will-wright-eng skills
 
+Browse this collection on [skills.sh](https://www.skills.sh/will-wright-eng/skills), including per-skill security audits.
+
 ## Install
 
 ```bash
@@ -8,52 +10,103 @@ bunx skills add https://github.com/will-wright-eng/skills
 
 This command uses the [vercel-labs/skills](https://github.com/vercel-labs/skills) CLI to implement skills in this repo.
 
-## Autoresearch
+## Update
 
-A Claude Code plugin that ships three sequential skills for adding a verifiable autonomous experiment loop to a git repository, generalized from [karpathy/autoresearch](https://github.com/karpathy/autoresearch).
+```bash
+bunx skills update
+```
+
+Updates all installed skills; pass a name to update one (`bunx skills update design-readiness`). The CLI has no version pinning — `update` re-fetches whatever is at the head of each source repo — so review the diff after updating.
+
+## Skill Self-Containment
+
+Every skill in this repo installs standalone. Cross-skill file references (`../other-skill/DOC.md`) are an antipattern: the [skills CLI](https://github.com/vercel-labs/skills) installs skills individually (`--skill <name>`, `skills use`, direct skill URLs) with no dependency resolution, so a link into a sibling skill directory dangles unless the whole repo happens to be installed. Shared docs are instead vendored into each skill that needs them, marked with a provenance comment (`<!-- Vendored verbatim from ... -->`). Vendored copies are updated by re-copying their source, never by editing in place.
+
+## Original Skills
+
+### Autoresearch
+
+Three sequential skills for adding a verifiable autonomous experiment loop to a git repository, generalized from [karpathy/autoresearch](https://github.com/karpathy/autoresearch).
 
 After install, invoke them in order: `autoresearch-method` → `autoresearch-verify` → `autoresearch-program`. Once `program.md` is generated, hand it to a fresh agent session and the loop runs from there.
 
 | Skill | Purpose |
-|---|---|
+| --- | --- |
 | `autoresearch-method` | Explain the methodology and evaluate whether the current repo is a good fit. |
 | `autoresearch-verify` | Build a repo-specific verifier script with `light` (per-candidate metric) and `heavy` (integrity matrix) modes. |
 | `autoresearch-program` | Generate `program.md` at the repo root — the operating directive a fresh agent session uses to run the loop. |
 
-## Architecture
+### Design & Documentation
 
-From [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering) — replicating third-party skills (after reading them) reduces prompt-injection risk versus installing from a remote source that can change underneath you.
+Self-contained skills covering the design-doc lifecycle: verify a design before building, distill what was built into ADRs, and keep the domain glossary sharp. Each writes only on explicit confirmation.
 
 | Skill | Purpose |
-|---|---|
+| --- | --- |
+| `design-readiness` | Audit a design/implementation/proposal doc for consistency with the codebase, ADRs, and `CONTEXT.md`, plus completeness of definition, then interview through drift fixes and open design decisions — interview answers are the approval, so the revised doc is applied once findings are resolved. |
+| `distill-adrs` | Distill existing implementation docs (plans, design docs, RFCs) into ADRs — extracts candidate decisions, verifies each against the code, and confirms them one at a time before writing. |
+| `create-context` | Build or refine a `CONTEXT.md` glossary — explores the codebase for candidate domain terms, then confirms each term, relationship, and ambiguity one at a time before writing. |
+
+### Refactoring
+
+| Skill | Purpose |
+| --- | --- |
+| `anneal` | Carve a god module into stable and volatile pieces along evidence from git history — hotspot ranking via the [hc](https://github.com/will-wright-eng/hc) CLI (raw-git fallback when absent), a three-axis autopsy of the target file, a seam-by-seam interview, and a strangler-fig migration plan with a measurable baseline. |
+| `prune-comments` | Aggressively delete comment narration that restates the code — including "pseudo-why" comments whose reason is already visible and step-heading comments over blocks — and condense verbose why-comments and doc comments to terse technical language; doubt resolves toward deletion. Scoped to the diff against a base branch by default (path sweep on request), optionally driven under a target comment ratio, never touching semantic comments (directives, pragmas, license headers) or genuine why-comments, and modifying comments only: never code, never markdown. |
+
+`anneal` vendors copies of `improve-codebase-architecture`'s LANGUAGE.md (architectural vocabulary) and `grill-with-docs`'s ADR-FORMAT.md — see [Skill Self-Containment](#skill-self-containment).
+
+## Replicated Skills
+
+Copied verbatim from their source repos — replicating third-party skills (after reading them) reduces prompt-injection risk versus installing from a remote source that can change underneath you.
+
+### Architecture
+
+From [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering).
+
+| Skill | Purpose |
+| --- | --- |
 | `improve-codebase-architecture` | Surface deepening opportunities — refactors that turn shallow modules into deep ones, using a fixed architectural vocabulary. |
 | `grill-with-docs` | Interview-style session that stress-tests a plan against the project's domain language and updates `CONTEXT.md` / ADRs inline as decisions crystallise. |
 
-`improve-codebase-architecture` references `grill-with-docs` for `CONTEXT.md` and ADR format docs, so the two skills are designed to be installed together.
+Upstream, `improve-codebase-architecture` linked to `grill-with-docs` for its `CONTEXT.md` and ADR format docs; this repo vendors copies of those docs into the skill instead (see [Skill Self-Containment](#skill-self-containment)). The two repointed link paths are the only local deviation from the replicated source.
 
-## Productivity
+### Productivity
 
-From [mattpocock/skills](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md) — replicated locally to reduce prompt-injection risk.
+From [mattpocock/skills](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md).
 
 | Skill | Purpose |
-|---|---|
+| --- | --- |
 | `grill-me` | Relentless, one-question-at-a-time interview that stress-tests a plan or design before you build, recommending an answer for each decision and exploring the codebase when it can answer a question itself. |
 
-## Communication
+### Communication
 
-From [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman/blob/main/skills/caveman/SKILL.md) — replicated locally to reduce prompt-injection risk.
+From [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman/blob/main/skills/caveman/SKILL.md).
 
 | Skill | Purpose |
-|---|---|
+| --- | --- |
 | `caveman` | Ultra-compressed response mode — cuts token usage ~75% by stripping articles, filler, and hedging while keeping full technical accuracy. Supports `lite` / `full` / `ultra` and 文言文 (`wenyan-*`) intensity levels. |
 
-## Code Style
+### Code Style
 
-From [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail/blob/main/skills/ponytail/SKILL.md) — replicated locally to reduce prompt-injection risk. The upstream plugin also ships Node lifecycle hooks for always-on activation and a statusline badge; only the skill is replicated here.
+From [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail/blob/main/skills/ponytail/SKILL.md). The upstream plugin also ships Node lifecycle hooks for always-on activation and a statusline badge; only the skill is replicated here.
 
 | Skill | Purpose |
-|---|---|
+| --- | --- |
 | `ponytail` | Lazy senior dev mode — climbs a ladder (YAGNI → reuse → stdlib → native platform → installed dep → one line → minimum) before writing code, never cutting validation, error handling, security, or accessibility. Supports `lite` / `full` / `ultra` intensity levels. Pairs with `caveman`: ponytail governs the code, caveman governs the prose. |
+
+### Coding Guidelines
+
+From [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/skills/karpathy-guidelines/SKILL.md).
+
+| Skill | Purpose |
+| --- | --- |
+| `karpathy-guidelines` | Behavioral guidelines to reduce common LLM coding mistakes, derived from [Andrej Karpathy's observations](https://x.com/karpathy/status/2015883857489522876) — think before coding, simplicity first, surgical changes, goal-driven execution. |
+
+Checked against Karpathy's 2026 public statements as of 2026-08-31: no conflicts. His [Sequoia Ascent talk (Aug 2026)](https://karpathy.bearblog.dev/sequoia-ascent-2026/) still criticizes agent output as "bloated, copy-pasted, awkwardly abstracted, brittle," and his ["agentic engineering" framing](https://singjupost.com/andrej-karpathy-from-vibe-coding-to-agentic-engineering-w-stephanie-zhan-transcript/) (spec design, eval design, diff review) maps onto the skill's goal-driven-execution guideline. The skill's caution bias reads slightly conservative next to his shift toward agent autonomy (~80% agent-written code, [AutoResearch](https://www.nextbigfuture.com/2026/03/andrej-karpathy-on-code-agents-autoresearch-and-the-self-improvement-loopy-era-of-ai.html)), but his answer to autonomy is verifiability, which is that same guideline. The source tweet (Jan 2026) postdates his vibe-coding-to-agentic-engineering shift.
+
+## User-Level CLAUDE.md
+
+Skills in this repo handle task-level behavior; global preferences live in `~/.claude/CLAUDE.md`, which Claude Code applies to every project. That file is managed with [gists3](https://github.com/will-wright-eng/gists3) (`g3`), an S3-inspired CLI that treats a GitHub gist as a bucket and its files as keys — the canonical copy lives in [this gist](https://gist.github.com/will-wright-eng/b1e652a05136107f461cd796103508cc). `g3 link` creates the local working copy, and `g3 push` / `g3 pull` sync edits with guards against overwriting unseen remote changes, giving the file free versioned storage without a full dotfiles repo.
 
 ## Other Repos
 

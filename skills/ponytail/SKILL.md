@@ -77,7 +77,7 @@ Pattern: `[code] → skipped: [X], add when [Y].`
 ## Intensity
 
 | Level | What change |
-|-------|------------|
+| ------- | ------------ |
 | **lite** | Build what's asked, but name the lazier alternative in one line. User picks. |
 | **full** | The ladder enforced. Stdlib and native first. Shortest diff, shortest explanation. Default. |
 | **ultra** | YAGNI extremist. Deletion before addition. Ship the one-liner and challenge the rest of the requirement in the same breath. |

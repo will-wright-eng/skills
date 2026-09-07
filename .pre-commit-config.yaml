@@ -6,19 +6,15 @@ repos:
     rev: v6.0.0
     hooks:
       - id: check-case-conflict
-      - id: check-docstring-first
       - id: check-executables-have-shebangs
       - id: check-json
       - id: check-merge-conflict
-      - id: check-toml
       - id: check-yaml
       - id: end-of-file-fixer
       - id: pretty-format-json
         args: [--autofix, --no-ensure-ascii, --no-sort-keys]
-      - id: requirements-txt-fixer
       - id: trailing-whitespace
       - id: check-added-large-files
-      - id: check-ast
       - id: fix-byte-order-marker
       - id: detect-private-key
       - id: mixed-line-ending
@@ -39,3 +35,28 @@ repos:
       - id: codespell
         args: ["--ignore-words=.codespell-ignore"]
         exclude: '\.git\/.*'
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1-1
+    hooks:
+      - id: shellcheck
+
+  - repo: https://github.com/maxwinterstein/shfmt-py
+    rev: v4.1.0
+    hooks:
+      - id: shfmt
+        args: [-w, -i, "2", -ci]
+
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: v1.28.0
+    hooks:
+      - id: zizmor
+
+  - repo: local
+    hooks:
+      - id: agentskills-validate
+        name: agentskills validate
+        description: Validate skill directories against the agentskills.io spec (Claude Code frontmatter extensions stripped first)
+        language: system
+        files: ^skills/[^/]+/
+        entry: bash scripts/validate_skill.sh

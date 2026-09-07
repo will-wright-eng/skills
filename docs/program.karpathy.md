@@ -29,9 +29,11 @@ Once you get confirmation, kick off the experimentation.
 Each experiment runs on a single GPU. The training script runs for a **fixed time budget of 5 minutes** (wall clock training time, excluding startup/compilation). You launch it simply as: `uv run train.py`.
 
 **What you CAN do:**
+
 - Modify `train.py` — this is the only file you edit. Everything is fair game: model architecture, optimizer, hyperparameters, training loop, batch size, model size, etc.
 
 **What you CANNOT do:**
+
 - Modify `prepare.py`. It is read-only. It contains the fixed evaluation, data loading, tokenizer, and training constants (time budget, sequence length, etc).
 - Install new packages or add dependencies. You can only use what's already in `pyproject.toml`.
 - Modify the evaluation harness. The `evaluate_bpb` function in `prepare.py` is the ground truth metric.
@@ -74,7 +76,7 @@ When an experiment is done, log it to `results.tsv` (tab-separated, NOT comma-se
 The TSV has a header row and 5 columns:
 
 ```
-commit	val_bpb	memory_gb	status	description
+commit val_bpb memory_gb status description
 ```
 
 1. git commit hash (short, 7 chars)
@@ -86,11 +88,11 @@ commit	val_bpb	memory_gb	status	description
 Example:
 
 ```
-commit	val_bpb	memory_gb	status	description
-a1b2c3d	0.997900	44.0	keep	baseline
-b2c3d4e	0.993200	44.2	keep	increase LR to 0.04
-c3d4e5f	1.005000	44.0	discard	switch to GeLU activation
-d4e5f6g	0.000000	0.0	crash	double model width (OOM)
+commit val_bpb memory_gb status description
+a1b2c3d 0.997900 44.0 keep baseline
+b2c3d4e 0.993200 44.2 keep increase LR to 0.04
+c3d4e5f 1.005000 44.0 discard switch to GeLU activation
+d4e5f6g 0.000000 0.0 crash double model width (OOM)
 ```
 
 ## The experiment loop
