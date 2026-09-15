@@ -104,6 +104,14 @@ From [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-ka
 
 Checked against Karpathy's 2026 public statements as of 2026-08-31: no conflicts. His [Sequoia Ascent talk (Aug 2026)](https://karpathy.bearblog.dev/sequoia-ascent-2026/) still criticizes agent output as "bloated, copy-pasted, awkwardly abstracted, brittle," and his ["agentic engineering" framing](https://singjupost.com/andrej-karpathy-from-vibe-coding-to-agentic-engineering-w-stephanie-zhan-transcript/) (spec design, eval design, diff review) maps onto the skill's goal-driven-execution guideline. The skill's caution bias reads slightly conservative next to his shift toward agent autonomy (~80% agent-written code, [AutoResearch](https://www.nextbigfuture.com/2026/03/andrej-karpathy-on-code-agents-autoresearch-and-the-self-improvement-loopy-era-of-ai.html)), but his answer to autonomy is verifiability, which is that same guideline. The source tweet (Jan 2026) postdates his vibe-coding-to-agentic-engineering shift.
 
+### Git Worktrees
+
+From [max-sixty/worktrunk](https://github.com/max-sixty/worktrunk/blob/main/skills/worktrunk/SKILL.md), pinned at upstream commit [`354c28b`](https://github.com/max-sixty/worktrunk/tree/354c28b2e42a41480529d983a3d5dd7e55ed5bc8/skills/worktrunk). The `reference/` docs the skill reads at runtime are copied alongside it so the skill installs standalone (see [Skill Self-Containment](#skill-self-containment)); upstream syncs them from [worktrunk.dev](https://worktrunk.dev), so refresh by re-copying the whole directory. Requires the [`wt`](https://worktrunk.dev) CLI.
+
+| Skill | Purpose |
+| --- | --- |
+| `worktrunk` | Guidance for the `wt` git-worktree CLI — which worktree a command acts on, user vs. project config (`~/.config/worktrunk/config.toml` vs. `.config/wt.toml`), lifecycle hooks, LLM commit-message generation, aliases, and escalating hook approvals to the user rather than passing `--yes`. |
+
 ## User-Level CLAUDE.md
 
 Skills in this repo handle task-level behavior; global preferences live in `~/.claude/CLAUDE.md`, which Claude Code applies to every project. That file is managed with [gists3](https://github.com/will-wright-eng/gists3) (`g3`), an S3-inspired CLI that treats a GitHub gist as a bucket and its files as keys — the canonical copy lives in [this gist](https://gist.github.com/will-wright-eng/b1e652a05136107f461cd796103508cc). `g3 link` creates the local working copy, and `g3 push` / `g3 pull` sync edits with guards against overwriting unseen remote changes, giving the file free versioned storage without a full dotfiles repo.
