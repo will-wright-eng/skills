@@ -59,6 +59,8 @@ Self-contained skills covering the design-doc lifecycle: verify a design before 
 
 Copied verbatim from their source repos — replicating third-party skills (after reading them) reduces prompt-injection risk versus installing from a remote source that can change underneath you.
 
+Each replicated skill is mapped to its upstream path in `scripts/replicated-skills.json`. `bash scripts/check_replicated_skills.sh` diffs every copy against the upstream ref and exits non-zero on drift; the [drift workflow](.github/workflows/replicated-skills-drift.yml) runs the same check on pull requests (commenting the diff on the PR), weekly, and on demand. The lint fixers are excluded from these directories so the copies stay byte-for-byte. To resync a skill, re-copy it from the commit the report links to and review the diff — never hand-edit a copy.
+
 ### Architecture
 
 From [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering).
@@ -103,6 +105,14 @@ From [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-ka
 | `karpathy-guidelines` | Behavioral guidelines to reduce common LLM coding mistakes, derived from [Andrej Karpathy's observations](https://x.com/karpathy/status/2015883857489522876) — think before coding, simplicity first, surgical changes, goal-driven execution. |
 
 Checked against Karpathy's 2026 public statements as of 2026-08-31: no conflicts. His [Sequoia Ascent talk (Aug 2026)](https://karpathy.bearblog.dev/sequoia-ascent-2026/) still criticizes agent output as "bloated, copy-pasted, awkwardly abstracted, brittle," and his ["agentic engineering" framing](https://singjupost.com/andrej-karpathy-from-vibe-coding-to-agentic-engineering-w-stephanie-zhan-transcript/) (spec design, eval design, diff review) maps onto the skill's goal-driven-execution guideline. The skill's caution bias reads slightly conservative next to his shift toward agent autonomy (~80% agent-written code, [AutoResearch](https://www.nextbigfuture.com/2026/03/andrej-karpathy-on-code-agents-autoresearch-and-the-self-improvement-loopy-era-of-ai.html)), but his answer to autonomy is verifiability, which is that same guideline. The source tweet (Jan 2026) postdates his vibe-coding-to-agentic-engineering shift.
+
+### Git Worktrees
+
+From [max-sixty/worktrunk](https://github.com/max-sixty/worktrunk/blob/main/skills/worktrunk/SKILL.md). The `reference/` docs the skill reads at runtime are copied alongside it so the skill installs standalone (see [Skill Self-Containment](#skill-self-containment)); upstream syncs them from [worktrunk.dev](https://worktrunk.dev), so refresh by re-copying the whole directory. Requires the [`wt`](https://worktrunk.dev) CLI.
+
+| Skill | Purpose |
+| --- | --- |
+| `worktrunk` | Guidance for the `wt` git-worktree CLI — which worktree a command acts on, user vs. project config (`~/.config/worktrunk/config.toml` vs. `.config/wt.toml`), lifecycle hooks, LLM commit-message generation, aliases, and escalating hook approvals to the user rather than passing `--yes`. |
 
 ## User-Level CLAUDE.md
 

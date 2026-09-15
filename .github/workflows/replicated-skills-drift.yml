@@ -1,0 +1,77 @@
+name: Replicated skills drift
+
+on:
+  pull_request:
+    paths:
+      - "skills/**"
+      - "scripts/check_replicated_skills.sh"
+      - "scripts/replicated-skills.json"
+      - ".github/workflows/replicated-skills-drift.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Diff replicated skills against upstream
+        id: check
+        continue-on-error: true
+        run: bash scripts/check_replicated_skills.sh --report "$RUNNER_TEMP/report.md"
+
+      - name: Publish job summary
+        run: |
+          {
+            echo "## Replicated skills drift"
+            echo
+            cat "$RUNNER_TEMP/report.md"
+          } >>"$GITHUB_STEP_SUMMARY"
+
+      - name: Upsert pull request comment
+        if: github.event_name == 'pull_request' && !github.event.pull_request.head.repo.fork
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          OUTCOME: ${{ steps.check.outcome }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          marker='<!-- replicated-skills-drift -->'
+          body="$RUNNER_TEMP/comment.md"
+          {
+            echo "$marker"
+            echo "## Replicated skills drift"
+            echo
+            cat "$RUNNER_TEMP/report.md"
+          } >"$body"
+          # GitHub rejects comment bodies over 65536 characters
+          if [ "$(wc -c <"$body")" -gt 60000 ]; then
+            head -c 60000 "$body" >"$body.tmp"
+            printf '\n```\n\n_Truncated. The full report is in the [job summary](%s)._\n' "$RUN_URL" >>"$body.tmp"
+            mv "$body.tmp" "$body"
+          fi
+          existing=$(gh api "repos/$REPO/issues/$PR/comments" --paginate \
+            --jq "first(.[] | select(.body | startswith(\"$marker\")) | .id)")
+          if [ "$OUTCOME" = "success" ]; then
+            [ -n "$existing" ] || exit 0
+            gh api -X PATCH "repos/$REPO/issues/comments/$existing" -F body=@"$body" >/dev/null
+          elif [ -n "$existing" ]; then
+            gh api -X PATCH "repos/$REPO/issues/comments/$existing" -F body=@"$body" >/dev/null
+          else
+            gh api -X POST "repos/$REPO/issues/$PR/comments" -F body=@"$body" >/dev/null
+          fi
+
+      - name: Fail on drift
+        if: steps.check.outcome != 'success'
+        run: |
+          echo "::error::Replicated skills drifted from upstream (see job summary)"
+          exit 1
