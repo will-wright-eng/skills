@@ -59,6 +59,8 @@ Self-contained skills covering the design-doc lifecycle: verify a design before 
 
 Copied verbatim from their source repos — replicating third-party skills (after reading them) reduces prompt-injection risk versus installing from a remote source that can change underneath you.
 
+Each replicated skill is mapped to its upstream path in `scripts/replicated-skills.json`. `bash scripts/check_replicated_skills.sh` diffs every copy against the upstream ref and exits non-zero on drift; the [drift workflow](.github/workflows/replicated-skills-drift.yml) runs the same check on pull requests (commenting the diff on the PR), weekly, and on demand. The lint fixers are excluded from these directories so the copies stay byte-for-byte. To resync a skill, re-copy it from the commit the report links to and review the diff — never hand-edit a copy.
+
 ### Architecture
 
 From [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering).
@@ -106,7 +108,7 @@ Checked against Karpathy's 2026 public statements as of 2026-08-31: no conflicts
 
 ### Git Worktrees
 
-From [max-sixty/worktrunk](https://github.com/max-sixty/worktrunk/blob/main/skills/worktrunk/SKILL.md), pinned at upstream commit [`354c28b`](https://github.com/max-sixty/worktrunk/tree/354c28b2e42a41480529d983a3d5dd7e55ed5bc8/skills/worktrunk). The `reference/` docs the skill reads at runtime are copied alongside it so the skill installs standalone (see [Skill Self-Containment](#skill-self-containment)); upstream syncs them from [worktrunk.dev](https://worktrunk.dev), so refresh by re-copying the whole directory. Requires the [`wt`](https://worktrunk.dev) CLI.
+From [max-sixty/worktrunk](https://github.com/max-sixty/worktrunk/blob/main/skills/worktrunk/SKILL.md). The `reference/` docs the skill reads at runtime are copied alongside it so the skill installs standalone (see [Skill Self-Containment](#skill-self-containment)); upstream syncs them from [worktrunk.dev](https://worktrunk.dev), so refresh by re-copying the whole directory. Requires the [`wt`](https://worktrunk.dev) CLI.
 
 | Skill | Purpose |
 | --- | --- |

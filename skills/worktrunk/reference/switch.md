@@ -7,12 +7,12 @@ Worktrees are addressed by branch name; paths are computed from a configurable t
 ## Examples
 
 ```console
-wt switch feature-auth           # Switch to worktree
-wt switch -                      # Previous worktree (like cd -)
-wt switch --create new-feature   # Create new branch and worktree
-wt switch --create hotfix --base production
-wt switch pr:123                 # Switch to PR #123's branch
-wt switch https://github.com/owner/repo/pull/123   # ...or paste the PR's URL
+$ wt switch feature-auth           # Switch to worktree
+$ wt switch -                      # Previous worktree (like cd -)
+$ wt switch --create new-feature   # Create new branch and worktree
+$ wt switch --create hotfix --base production
+$ wt switch pr:123                 # Switch to PR #123's branch
+$ wt switch https://github.com/owner/repo/pull/123   # ...or paste the PR's URL
 ```
 
 ## Creating a branch
@@ -32,10 +32,10 @@ If the branch already has a worktree, `wt switch` changes directories to it. Oth
 5. Spawns [post-start](https://worktrunk.dev/hook/#hook-types) and [post-switch hooks](https://worktrunk.dev/hook/#hook-types) in the background
 
 ```console
-wt switch feature                        # Existing branch → creates worktree
-wt switch --create feature               # New branch and worktree
-wt switch --create fix --base release    # New branch from release
-wt switch --create temp --no-hooks       # Skip hooks
+$ wt switch feature                        # Existing branch → creates worktree
+$ wt switch --create feature               # New branch and worktree
+$ wt switch --create fix --base release    # New branch from release
+$ wt switch --create temp --no-hooks       # Skip hooks
 ```
 
 ## Naming a worktree
@@ -53,12 +53,12 @@ Worktrees are addressed by branch name, and every argument that takes one also a
 | `mr:{N}` | GitLab MR !N's branch |
 
 ```console
-wt switch -                           # Back to previous
-wt switch ^                           # Default branch worktree
-wt switch --create fix --base=@       # Branch from current HEAD
-wt switch --create fix --base=pr:123  # Branch from PR #123's head
-wt switch pr:123                      # PR #123's branch
-wt switch mr:101                      # MR !101's branch
+$ wt switch -                           # Back to previous
+$ wt switch ^                           # Default branch worktree
+$ wt switch --create fix --base=@       # Branch from current HEAD
+$ wt switch --create fix --base=pr:123  # Branch from PR #123's head
+$ wt switch pr:123                      # PR #123's branch
+$ wt switch mr:101                      # MR !101's branch
 ```
 
 Shortcuts also apply to `--base`. For a fork PR/MR, the head commit is fetched and used as the base SHA without creating a tracking branch.
@@ -122,11 +122,11 @@ pager = "delta --paging=never --width=$COLUMNS"
 The `pr:<number>` / `mr:<number>` shortcut and the PR/MR's web URL both resolve to its branch. For same-repo PRs/MRs, worktrunk switches to the branch directly. For fork PRs/MRs, it fetches the ref (`refs/pull/N/head` or `refs/merge-requests/N/head`) and configures `pushRemote` to the fork URL.
 
 ```console
-wt switch pr:101                                  # GitHub PR #101
-wt switch https://github.com/owner/repo/pull/101  # ...the same PR, by URL
-wt switch mr:101                                  # GitLab MR !101
-wt switch https://gitlab.com/owner/repo/-/merge_requests/101  # ...the same MR, by URL
-wt switch --prs                                   # Browse open PRs/MRs in the picker
+$ wt switch pr:101                                  # GitHub PR #101
+$ wt switch https://github.com/owner/repo/pull/101  # ...the same PR, by URL
+$ wt switch mr:101                                  # GitLab MR !101
+$ wt switch https://gitlab.com/owner/repo/-/merge_requests/101  # ...the same MR, by URL
+$ wt switch --prs                                   # Browse open PRs/MRs in the picker
 ```
 
 Both work anywhere a branch is accepted, including `--base`. The `--create` flag cannot be used with a PR/MR reference since the branch already exists.

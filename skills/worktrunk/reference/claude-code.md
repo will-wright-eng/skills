@@ -105,9 +105,9 @@ All four plugins clear the marker when a session ends. A stale marker can remain
 Set status markers manually for any workflow:
 
 ```console
-wt config state marker set "🚧"                   # Current branch
-wt config state marker set "✅" --branch feature  # Specific branch
-git config worktrunk.state.feature.marker '{"marker":"💬","set_at":0}'  # Direct
+$ wt config state marker set "🚧"                   # Current branch
+$ wt config state marker set "✅" --branch feature  # Specific branch
+$ git config worktrunk.state.feature.marker '{"marker":"💬","set_at":0}'  # Direct
 ```
 
 ### Agent CLIs without a plugin

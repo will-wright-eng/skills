@@ -370,7 +370,7 @@ tmux = "tmux kill-session -t {{ branch | sanitize }} 2>/dev/null || true"
 To create a worktree and immediately attach:
 
 ```console
-wt switch --create feature -x tmux -- attach -t '{{ branch | sanitize }}'
+$ wt switch --create feature -x tmux -- attach -t '{{ branch | sanitize }}'
 ```
 
 ### cmux workspace per worktree
@@ -437,14 +437,12 @@ The agent plugins mark each worktree 🤖 (working) or 💬 (waiting) in `wt lis
 Spawn a worktree with an agent CLI running in the background. `-x` names the program to run and everything after `--` is passed to it, so OpenCode's subcommand goes after the `--`: `-x opencode -- run '<task>'`.
 
 **tmux** (new detached session):
-
 ```bash
 tmux new-session -d -s fix-auth-bug "wt switch --create fix-auth-bug -x claude -- \
   'The login session expires after 5 minutes. Find the session timeout config and extend it to 24 hours.'"
 ```
 
 **Zellij** (new pane in current session):
-
 ```bash
 zellij run -- wt switch --create fix-auth-bug -x claude -- \
   'The login session expires after 5 minutes. Find the session timeout config and extend it to 24 hours.'

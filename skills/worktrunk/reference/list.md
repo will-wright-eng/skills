@@ -56,7 +56,7 @@ $ wt list --branches --full
 Output as JSON for scripting:
 
 ```console
-wt list --format=json
+$ wt list --format=json
 ```
 
 ## Columns
@@ -494,7 +494,7 @@ The original bare-array format — one object per row, no envelope — selected 
 
 The envelope's `repo.default_branch` and `collected` have no schema-1 equivalent, and schema 2 separates "nothing to report" from "not determined" — see [How "no value" reads](#schema-2).
 
-Missing a field that would be generally useful? Open an issue at <https://github.com/max-sixty/worktrunk>.
+Missing a field that would be generally useful? Open an issue at https://github.com/max-sixty/worktrunk.
 
 ## Command reference
 
@@ -558,7 +558,7 @@ Global Options:
 
 Single-line status for the current worktree.
 
-The line carries the same cells as the worktree's row in `wt list`. A stale CI status cache makes it reach the network for a second or two, so it fits a statusline the host renders in the background — Claude Code's, a `tmux` status bar — better than a prompt the shell blocks on. Want it fast enough for a synchronous prompt? Open an issue at <https://github.com/max-sixty/worktrunk>.
+The line carries the same cells as the worktree's row in `wt list`. A stale CI status cache makes it reach the network for a second or two, so it fits a statusline the host renders in the background — Claude Code's, a `tmux` status bar — better than a prompt the shell blocks on. Want it fast enough for a synchronous prompt? Open an issue at https://github.com/max-sixty/worktrunk.
 
 ### Output formats
 

@@ -10,20 +10,27 @@ repos:
       - id: check-json
       - id: check-merge-conflict
       - id: check-yaml
+      # Replicated skills are byte-for-byte upstream copies; keep every fixer off them.
+      # Mirror of scripts/replicated-skills.json — add new replicated skills to both.
       - id: end-of-file-fixer
+        exclude: &replicated_skills ^skills/(caveman|grill-me|grill-with-docs|improve-codebase-architecture|karpathy-guidelines|ponytail|worktrunk)/
       - id: pretty-format-json
         args: [--autofix, --no-ensure-ascii, --no-sort-keys]
       - id: trailing-whitespace
+        exclude: *replicated_skills
       - id: check-added-large-files
       - id: fix-byte-order-marker
+        exclude: *replicated_skills
       - id: detect-private-key
       - id: mixed-line-ending
         args: [--fix=lf]
+        exclude: *replicated_skills
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.48.0
     hooks:
       - id: markdownlint
+        exclude: *replicated_skills
         args:
           - --fix
         verbose: true

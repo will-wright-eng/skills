@@ -1,0 +1,55 @@
+{
+  "improve-codebase-architecture": {
+    "repo": "mattpocock/skills",
+    "ref": "main",
+    "paths": {
+      "skills/engineering/improve-codebase-architecture": "."
+    },
+    "ignore": [
+      "ADR-FORMAT.md",
+      "CONTEXT-FORMAT.md"
+    ]
+  },
+  "grill-with-docs": {
+    "repo": "mattpocock/skills",
+    "ref": "main",
+    "paths": {
+      "skills/engineering/grill-with-docs": "."
+    }
+  },
+  "grill-me": {
+    "repo": "mattpocock/skills",
+    "ref": "main",
+    "paths": {
+      "skills/productivity/grilling/SKILL.md": "SKILL.md"
+    }
+  },
+  "caveman": {
+    "repo": "JuliusBrussee/caveman",
+    "ref": "main",
+    "paths": {
+      "skills/caveman/SKILL.md": "SKILL.md"
+    }
+  },
+  "ponytail": {
+    "repo": "DietrichGebert/ponytail",
+    "ref": "main",
+    "paths": {
+      "skills/ponytail/SKILL.md": "SKILL.md"
+    }
+  },
+  "karpathy-guidelines": {
+    "repo": "multica-ai/andrej-karpathy-skills",
+    "ref": "main",
+    "paths": {
+      "skills/karpathy-guidelines/SKILL.md": "SKILL.md"
+    }
+  },
+  "worktrunk": {
+    "repo": "max-sixty/worktrunk",
+    "ref": "main",
+    "paths": {
+      "skills/worktrunk": "."
+    }
+  }
+}

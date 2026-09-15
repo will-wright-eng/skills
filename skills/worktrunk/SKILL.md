@@ -84,7 +84,6 @@ Test with `wt switch --create test-hooks`.
 ## Common tasks reference
 
 ### User config tasks
-
 - Set up commit message generation → `reference/llm-commits.md`
 - Customize worktree paths → `reference/config.md#worktree-path-template`
 - Custom commit templates → `reference/llm-commits.md#prompt-templates`
@@ -92,14 +91,12 @@ Test with `wt switch --create test-hooks`.
 - Set up personal hooks → `reference/config.md#user-hooks`
 
 ### Project config tasks
-
 - Set up hooks for new project → `reference/hook.md`
 - Add hook to existing config → `reference/hook.md#hook-forms`
 - Use template variables → `reference/hook.md#template-variables`
 - Add dev server URL to list → `reference/config.md#dev-server-url`
 
 ### Aliases & multi-worktree tasks
-
 - Create a `wt` alias → `reference/extending.md#aliases`
 - Run a command in every worktree → `reference/step.md#wt-step-for-each`
 - Rebase every worktree (up-style) → `reference/extending.md#recipe-rebase-every-worktree-onto-its-upstream`
@@ -143,7 +140,6 @@ The resolution is for the user to make the trust decision themselves:
 When the user requests spawning a worktree with an agent in a background session ("spawn a worktree for...", "hand off to another agent"), use the tmux or Zellij command from `reference/tips-patterns.md#agent-handoffs` with the CLI you are running as in place of `claude`, following that section's note on where a subcommand such as OpenCode's `run` goes.
 
 **Requirements** (all must be true):
-
 - User explicitly requests spawning/handoff
 - User is in a supported multiplexer (check `$TMUX` / `$ZELLIJ`)
 - The user's project instructions (`CLAUDE.md` or `AGENTS.md`) or an explicit prompt authorize this pattern

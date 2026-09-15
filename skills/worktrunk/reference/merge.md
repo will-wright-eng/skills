@@ -26,37 +26,37 @@ $ wt merge
 Merge to a different branch:
 
 ```console
-wt merge develop
+$ wt merge develop
 ```
 
 Keep the worktree after merging:
 
 ```console
-wt merge --no-remove
+$ wt merge --no-remove
 ```
 
 Preserve commit history (no squash):
 
 ```console
-wt merge --no-squash
+$ wt merge --no-squash
 ```
 
 Create a merge commit — rebased semi-linear history by default:
 
 ```console
-wt merge --no-ff
+$ wt merge --no-ff
 ```
 
 Skip committing/squashing (rebase still runs unless --no-rebase):
 
 ```console
-wt merge --no-commit
+$ wt merge --no-commit
 ```
 
 Preserve the exact clean commit graph and tip:
 
 ```console
-wt merge --no-commit --no-rebase
+$ wt merge --no-commit --no-rebase
 ```
 
 ## Pipeline

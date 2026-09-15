@@ -24,7 +24,6 @@ echo "say hello" | <your-configured-command>
 ```
 
 Common issues:
-
 - **API key not set**: Each tool has its own auth mechanism
 - **Model not available**: Check model name with the tool's help
 - **Network issues**: Check internet connectivity
@@ -47,7 +46,6 @@ paste each file's contents into the corresponding inline setting.
 ### Hook not running
 
 Check sequence:
-
 1. Verify `.config/wt.toml` exists: `ls -la .config/wt.toml`
 2. Check TOML syntax (use `wt hook show` to see parsed config)
 3. Verify hook type spelling matches one of the ten types
@@ -56,7 +54,6 @@ Check sequence:
 ### Hook failing
 
 Debug steps:
-
 1. Run the command manually in the worktree to see errors
 2. Check for missing dependencies (npm packages, system tools)
 3. Verify template variables expand correctly with `wt hook show --expanded` (shows each command with its variables substituted)
@@ -125,7 +122,6 @@ The residual case both paths deliberately leave is a wedged daemon on a *live* w
 ### PowerShell profiles not created
 
 On Windows, `wt config shell install` creates PowerShell profiles automatically when running from cmd.exe or PowerShell. It creates both:
-
 - `Documents/PowerShell/Microsoft.PowerShell_profile.ps1` (PowerShell 7+/pwsh)
 - `Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1` (Windows PowerShell 5.1)
 
@@ -161,6 +157,5 @@ session:
 ### Detection logic
 
 Worktrunk detects Windows-native shells (cmd/PowerShell) by checking if the `SHELL` environment variable is **not** set:
-
 - `SHELL` not set → Windows-native shell → create both PowerShell profiles
 - `SHELL` set (e.g., `/usr/bin/bash`) → Git Bash/MSYS2 → skip PowerShell

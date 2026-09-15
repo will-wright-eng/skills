@@ -7,25 +7,25 @@ Manage user & project configs. Includes shell integration, hooks, and saved stat
 Install shell integration (required for directory switching):
 
 ```console
-wt config shell install
+$ wt config shell install
 ```
 
 Create user config file with documented examples:
 
 ```console
-wt config create
+$ wt config create
 ```
 
 Create project config file (`.config/wt.toml`) for hooks:
 
 ```console
-wt config create --project
+$ wt config create --project
 ```
 
 Show current configuration and file locations:
 
 ```console
-wt config show
+$ wt config show
 ```
 
 ## Configuration files
@@ -613,7 +613,7 @@ Aliases defined here are shared with teammates. For personal aliases, use the [u
 Worktrunk needs shell integration to change directories when switching worktrees. Install with:
 
 ```console
-wt config shell install
+$ wt config shell install
 ```
 
 For manual setup, see `wt config shell init --help`.
@@ -647,7 +647,7 @@ For nested config sections, use double underscores to separate levels:
 Override the LLM command in CI to use a mock:
 
 ```console
-WORKTRUNK_COMMIT__GENERATION__COMMAND="echo 'test: automated commit'" wt merge
+$ WORKTRUNK_COMMIT__GENERATION__COMMAND="echo 'test: automated commit'" wt merge
 ```
 
 ### Other environment variables
@@ -673,8 +673,8 @@ WORKTRUNK_COMMIT__GENERATION__COMMAND="echo 'test: automated commit'" wt merge
 `--config-set <toml>` overrides any user config key for a single invocation. The value is a TOML fragment, so arrays and tables work directly; the flag is global (works before or after the subcommand), repeatable, and a later `--config-set` replaces an earlier one for the same key.
 
 ```console
-wt --config-set list.full=true list
-wt step copy-ignored --config-set 'step.copy-ignored.exclude=["target", "dist"]'
+$ wt --config-set list.full=true list
+$ wt step copy-ignored --config-set 'step.copy-ignored.exclude=["target", "dist"]'
 ```
 
 This composes with aliases — an alias body can invoke `wt --config-set … <command>` to render a named view without changing the saved config.
@@ -691,7 +691,7 @@ Sources closer to the invocation rank higher (user config above system config), 
 A `--config-set` that names a project entry is both the highest layer and the most specific key, so it beats the same flag's global key:
 
 ```console
-wt --config-set 'projects."github.com/owner/repo".worktree-path = "/tmp/scratch"' switch --create feature
+$ wt --config-set 'projects."github.com/owner/repo".worktree-path = "/tmp/scratch"' switch --create feature
 ```
 
 Hooks, aliases and `step.copy-ignored.exclude` accumulate rather than replace, so an env-set hook and a project's hook both run.
@@ -753,11 +753,10 @@ before failing; warnings exit zero.
 Use `--full` to run diagnostic checks:
 
 ```console
-wt config show --full
+$ wt config show --full
 ```
 
 This tests:
-
 - **CI tool status** — Whether `gh` (GitHub) or `glab` (GitLab) is installed and authenticated
 - **Commit generation** — Whether the LLM command can generate commit messages
 - **Version check** — Whether a newer version is available on GitHub
@@ -804,27 +803,23 @@ in-place update migrates them to `approvals.toml`.
 ### Examples
 
 Preview and apply updates:
-
 ```console
-wt config update
+$ wt config update
 ```
 
 Apply without confirmation:
-
 ```console
-wt config update --yes
+$ wt config update --yes
 ```
 
 Write the migration artifact to a file:
-
 ```console
-wt config update --output migrated.toml
+$ wt config update --output migrated.toml
 ```
 
 Write the migration artifact to stdout:
-
 ```console
-wt config update --output=-
+$ wt config update --output=-
 ```
 
 ### Command reference
@@ -851,45 +846,38 @@ Project hooks and project aliases prompt for approval on first run to prevent un
 ### Examples
 
 List commands and their approval status for current project:
-
 ```console
-wt config approvals list
+$ wt config approvals list
 ```
 
 Pre-approve all hook and alias commands for current project:
-
 ```console
-wt config approvals add
+$ wt config approvals add
 ```
 
 Pre-approve without prompting, for a container or CI job:
-
 ```console
-wt config approvals add --yes
+$ wt config approvals add --yes
 ```
 
 Clear approvals for current project:
-
 ```console
-wt config approvals clear
+$ wt config approvals clear
 ```
 
 Clear only approvals for commands no longer in the project config:
-
 ```console
-wt config approvals clear --stale
+$ wt config approvals clear --stale
 ```
 
 Clear global approvals:
-
 ```console
-wt config approvals clear --global
+$ wt config approvals clear --global
 ```
 
 Check whether an unattended run would stop for approval:
-
 ```console
-wt config approvals list --format=json | jq -r .state
+$ wt config approvals list --format=json | jq -r .state
 ```
 
 ### How approvals work
@@ -943,22 +931,19 @@ Aliases are command templates configured in user (`~/.config/worktrunk/config.to
 ### Examples
 
 Show every configured alias's template:
-
 ```console
-wt config alias show
+$ wt config alias show
 ```
 
 Show the template for `deploy`:
-
 ```console
-wt config alias show deploy
+$ wt config alias show deploy
 ```
 
 Preview an invocation without running it:
-
 ```console
-wt config alias dry-run deploy
-wt config alias dry-run deploy -- --env=staging
+$ wt config alias dry-run deploy
+$ wt config alias dry-run deploy -- --env=staging
 ```
 
 ### Command reference
@@ -994,45 +979,38 @@ State is stored in `.git/` (config entries and log files), separate from configu
 ### Examples
 
 Get the default branch:
-
 ```console
-wt config state default-branch
+$ wt config state default-branch
 ```
 
 Set the default branch manually:
-
 ```console
-wt config state default-branch set main
+$ wt config state default-branch set main
 ```
 
 Set a marker for current branch:
-
 ```console
-wt config state marker set 🚧
+$ wt config state marker set 🚧
 ```
 
 Store arbitrary data:
-
 ```console
-wt config state vars set env=staging
+$ wt config state vars set env=staging
 ```
 
 Drop the regenerable caches:
-
 ```console
-wt config state cache clear
+$ wt config state cache clear
 ```
 
 Show all stored state:
-
 ```console
-wt config state get
+$ wt config state get
 ```
 
 Clear all stored state:
-
 ```console
-wt config state clear
+$ wt config state clear
 ```
 
 ### Command reference
@@ -1077,15 +1055,13 @@ Without a subcommand, runs `get`.
 ### Examples
 
 Show cache contents:
-
 ```console
-wt config state cache
+$ wt config state cache
 ```
 
 Drop all caches:
-
 ```console
-wt config state cache clear
+$ wt config state cache clear
 ```
 
 ### Command reference
@@ -1115,7 +1091,7 @@ Default branch detection and override.
 Useful in scripts to avoid hardcoding `main` or `master`:
 
 ```console
-git rebase $(wt config state default-branch)
+$ git rebase $(wt config state default-branch)
 ```
 
 In a hook or alias template, prefer the `{{ default_branch }}` [template variable](https://worktrunk.dev/hook/#template-variables); `$(wt config state default-branch)` is for plain shell scripts.
@@ -1138,7 +1114,6 @@ Once detected, the result is cached in `worktrunk.default-branch` for fast acces
 An abandoned remote query is the one case that isn't cached: the branch it inferred locally answers that command, but a value guessed while the remote was unreachable would otherwise become permanent, so the next command queries again.
 
 The local inference fallback uses these heuristics in order:
-
 - If only one local branch exists, uses it
 - For bare repos or empty repos, checks `symbolic-ref HEAD`
 - Checks `git config init.defaultBranch`
@@ -1221,33 +1196,28 @@ All logs are stored in `.git/wt/logs/` (in the main worktree's git directory). A
 ### Examples
 
 List all log files:
-
 ```console
-wt config state logs
+$ wt config state logs
 ```
 
 Query the command log:
-
 ```console
-tail -5 .git/wt/logs/commands.jsonl | jq .
+$ tail -5 .git/wt/logs/commands.jsonl | jq .
 ```
 
 Path to one hook log (e.g. the `post-start` `server` hook for the current branch):
-
 ```console
-wt config state logs --format=json | jq -r '.hook_output[] | select(.source == "user" and .hook_type == "post-start" and (.name | startswith("server"))) | .path'
+$ wt config state logs --format=json | jq -r '.hook_output[] | select(.source == "user" and .hook_type == "post-start" and (.name | startswith("server"))) | .path'
 ```
 
 Logs for a specific branch:
-
 ```console
-wt config state logs --format=json | jq '.hook_output[] | select(.branch | startswith("feature"))'
+$ wt config state logs --format=json | jq '.hook_output[] | select(.branch | startswith("feature"))'
 ```
 
 Clear all logs:
-
 ```console
-wt config state logs clear
+$ wt config state logs clear
 ```
 
 ### Command reference
@@ -1333,7 +1303,7 @@ $ wt list
 Stored in git config as `worktrunk.state.<branch>.marker`. Set directly with:
 
 ```console
-git config worktrunk.state.feature.marker '{"marker":"🚧","set_at":0}'
+$ git config worktrunk.state.feature.marker '{"marker":"🚧","set_at":0}'
 ```
 
 Without a subcommand, runs `get` for the current branch. For `--branch`, use `get --branch=NAME`.
@@ -1368,28 +1338,24 @@ Store custom variables per branch. Values are stored as-is — plain strings or 
 ### Examples
 
 Set and get values:
-
 ```console
-wt config state vars set env=staging
-wt config state vars get env
+$ wt config state vars set env=staging
+$ wt config state vars get env
 ```
 
 Store JSON:
-
 ```console
-wt config state vars set config='{"port": 3000, "debug": true}'
+$ wt config state vars set config='{"port": 3000, "debug": true}'
 ```
 
 List all keys:
-
 ```console
-wt config state vars list
+$ wt config state vars list
 ```
 
 Operate on a different branch:
-
 ```console
-wt config state vars set env=production --branch=main
+$ wt config state vars set env=production --branch=main
 ```
 
 ### Template access
@@ -1404,9 +1370,8 @@ dev = "ENV={{ vars.env | default('development') }} npm start -- --port {{ vars.p
 JSON object and array values support dot access:
 
 ```console
-wt config state vars set config='{"port": 3000, "debug": true}'
+$ wt config state vars set config='{"port": 3000, "debug": true}'
 ```
-
 ```toml
 [post-start]
 dev = "npm start -- --port {{ vars.config.port }}"

@@ -18,20 +18,20 @@ Scaling app to 0 machines
 Remove specific worktrees / branches:
 
 ```console
-wt remove feature-branch
-wt remove old-feature another-branch
+$ wt remove feature-branch
+$ wt remove old-feature another-branch
 ```
 
 Keep the branch:
 
 ```console
-wt remove --no-delete-branch feature-branch
+$ wt remove --no-delete-branch feature-branch
 ```
 
 Force-delete an unmerged branch:
 
 ```console
-wt remove -D experimental
+$ wt remove -D experimental
 ```
 
 ## Branch cleanup
@@ -65,9 +65,9 @@ Worktrunk has two force flags for different situations:
 | `--force-delete` (`-D`) | Branch | Branch has unmerged commits |
 
 ```console
-wt remove feature --force       # Remove dirty worktree
-wt remove feature -D            # Delete unmerged branch
-wt remove feature --force -D    # Both
+$ wt remove feature --force       # Remove dirty worktree
+$ wt remove feature -D            # Delete unmerged branch
+$ wt remove feature --force -D    # Both
 ```
 
 Use `--no-delete-branch` to keep the branch regardless of merge status.

@@ -16,10 +16,10 @@ $ wt step commit
 Manual merge workflow with review between steps:
 
 ```console
-wt step commit
-wt step squash
-wt step rebase
-wt step push
+$ wt step commit
+$ wt step squash
+$ wt step rebase
+$ wt step push
 ```
 
 ## Operations
@@ -98,7 +98,7 @@ See [LLM-generated commit messages](https://worktrunk.dev/llm-commits/) for conf
 `--branch` commits in another worktree's branch without leaving the current one:
 
 ```console
-wt step commit --branch feature
+$ wt step commit --branch feature
 ```
 
 The branch must have a checked-out worktree. `--branch` re-roots the whole command: staging, hooks, and the commit all happen there. It selects the previewed worktree the same way, so `--dry-run` describes the commit the same flags would make.
@@ -120,7 +120,7 @@ Controls what to stage before committing:
 | `none` | Don't stage anything, commit only what's already staged |
 
 ```console
-wt step commit --stage=tracked
+$ wt step commit --stage=tracked
 ```
 
 Configure the default in user config:
@@ -135,7 +135,7 @@ stage = "tracked"
 Render the prompt, print the LLM command, generate the message, and exit without staging, running hooks, or committing:
 
 ```console
-wt step commit --dry-run
+$ wt step commit --dry-run
 ```
 
 Three sections are printed: the rendered prompt, the shell command that would invoke the LLM, and the message returned. The LLM call still happens — only the commit is skipped.
@@ -201,7 +201,7 @@ Controls what to stage before squashing:
 | `none` | Don't stage anything, squash only committed changes |
 
 ```console
-wt step squash --stage=none
+$ wt step squash --stage=none
 ```
 
 Configure the default in user config:
@@ -216,7 +216,7 @@ stage = "tracked"
 Render the prompt, print the LLM command, generate the squash message, and exit without resetting, running hooks, or committing:
 
 ```console
-wt step squash --dry-run
+$ wt step squash --dry-run
 ```
 
 Three sections are printed: the rendered prompt, the shell command that would invoke the LLM, and the message returned. The LLM call still happens — only the squash and commit are skipped.
@@ -275,9 +275,9 @@ The target is any commit: a branch, a tag, a SHA.
 ### Examples
 
 ```console
-wt step rebase            # Rebase onto default branch
-wt step rebase develop    # Rebase onto develop
-wt step rebase v1.2.0     # Rebase onto a tag
+$ wt step rebase            # Rebase onto default branch
+$ wt step rebase develop    # Rebase onto develop
+$ wt step rebase v1.2.0     # Rebase onto a tag
 ```
 
 ### Outcomes
@@ -336,9 +336,9 @@ The target is a branch, and must already be an ancestor of the current branch. O
 ### Examples
 
 ```console
-wt step push             # Fast-forward main to current branch
-wt step push develop     # Fast-forward develop instead
-wt step push --no-ff     # Merge commit instead of a fast-forward
+$ wt step push             # Fast-forward main to current branch
+$ wt step push develop     # Fast-forward develop instead
+$ wt step push --no-ff     # Merge commit instead of a fast-forward
 ```
 
 ### Target worktree
@@ -388,7 +388,7 @@ This is what `wt merge` would include — a single diff against the merge base.
 `--branch` diffs another worktree's branch without leaving the current one:
 
 ```console
-wt step diff --branch feature
+$ wt step diff --branch feature
 ```
 
 The branch must have a checked-out worktree.
@@ -398,15 +398,15 @@ The branch must have a checked-out worktree.
 Arguments after `--` are forwarded to `git diff`:
 
 ```console
-wt step diff -- --stat
-wt step diff -- --name-only
-wt step diff -- -- '*.rs'
+$ wt step diff -- --stat
+$ wt step diff -- --name-only
+$ wt step diff -- -- '*.rs'
 ```
 
 The diff is pipeable to tools like `delta`:
 
 ```console
-wt step diff | delta
+$ wt step diff | delta
 ```
 
 ### How it works
@@ -466,8 +466,8 @@ copy = "wt step copy-ignored"
 By default the copy runs from the primary worktree into the current one — what a `post-start` hook needs, since the new worktree is where the hook runs. `--from` and `--to` name either end by branch, so a copy can run between two worktrees from anywhere:
 
 ```console
-wt step copy-ignored --from main --to feature   # between two named worktrees
-wt step copy-ignored --from feature             # from feature into the current worktree
+$ wt step copy-ignored --from main --to feature   # between two named worktrees
+$ wt step copy-ignored --from feature             # from feature into the current worktree
 ```
 
 A branch named by `--from` or `--to` must have a worktree.
@@ -495,7 +495,7 @@ exclude = [".cache/", ".turbo/"]
 To copy nothing unless `.worktreeinclude` exists — matching Claude Code desktop, where the file is required — pass `--require-include`:
 
 ```console
-wt step copy-ignored --require-include
+$ wt step copy-ignored --require-include
 ```
 
 Without `.worktreeinclude`, the command is a no-op (it reports that nothing was copied and why). With the file present, only matching files copy as above. To apply this across every repository, put the flag in a user-config hook: `post-start = "wt step copy-ignored --require-include"`.
@@ -616,7 +616,7 @@ $ wt step eval '{{ branch | hash_port }}'
 Use in shell substitution:
 
 ```console
-curl http://localhost:$(wt step eval '{{ branch | hash_port }}')/health
+$ curl http://localhost:$(wt step eval '{{ branch | hash_port }}')/health
 ```
 
 Combine multiple values:
@@ -688,15 +688,15 @@ A summary of successes and failures is shown at the end. A template-expansion er
 Arguments after `--` are the program and its arguments — run directly, no shell.
 
 ```console
-wt step for-each -- git status --short
-wt step for-each -- npm install
+$ wt step for-each -- git status --short
+$ wt step for-each -- npm install
 ```
 
 For pipes, redirects, variables, or globs, wrap in `sh -c`:
 
 ```console
-wt step for-each -- sh -c 'git status | wc -l'
-wt step for-each -- sh -c 'echo $HOME && git pull'
+$ wt step for-each -- sh -c 'git status | wc -l'
+$ wt step for-each -- sh -c 'echo $HOME && git pull'
 ```
 
 ### Template variables
@@ -704,7 +704,7 @@ wt step for-each -- sh -c 'echo $HOME && git pull'
 Variables substitute into each argv element before exec. See [`wt hook` template variables](https://worktrunk.dev/hook/#template-variables) for the complete list and filters.
 
 ```console
-wt step for-each -- echo 'Branch: {{ branch }}'
+$ wt step for-each -- echo 'Branch: {{ branch }}'
 ```
 
 Each element is expanded fresh in every worktree, so `{{ branch }}` is that worktree's branch. An alias wrapping for-each renders templates earlier, in the invoking worktree; [deferring expansion in an alias](https://worktrunk.dev/extending/#deferring-expansion-to-a-nested-wt-command) shows how to keep a variable per-worktree.
@@ -714,7 +714,7 @@ Each element is expanded fresh in every worktree, so `{{ branch }}` is that work
 Pull updates in worktrees with upstreams (skips others):
 
 ```console
-git fetch --prune && wt step for-each -- sh -c '[ "$(git rev-parse @{u} 2>/dev/null)" ] || exit 0; git pull --autostash'
+$ git fetch --prune && wt step for-each -- sh -c '[ "$(git rev-parse @{u} 2>/dev/null)" ] || exit 0; git pull --autostash'
 ```
 
 ### Command reference
@@ -832,8 +832,8 @@ Locked worktrees and the main worktree are always skipped. The current worktree 
 Candidates younger than `--min-age` (default: 1 day) are skipped. A worktree's age comes from its creation time, and a branch with no worktree takes its age from its oldest reflog entry. This prevents removing a worktree just created from the default branch: it looks "merged" because its branch points at the same commit.
 
 ```console
-wt step prune --min-age=0s     # no age guard
-wt step prune --min-age=2d     # skip candidates younger than 2 days
+$ wt step prune --min-age=0s     # no age guard
+$ wt step prune --min-age=2d     # skip candidates younger than 2 days
 ```
 
 ### JSON output
@@ -845,13 +845,13 @@ wt step prune --min-age=2d     # skip candidates younger than 2 days
 Preview what would be removed:
 
 ```console
-wt step prune --dry-run
+$ wt step prune --dry-run
 ```
 
 Remove all merged worktrees:
 
 ```console
-wt step prune
+$ wt step prune
 ```
 
 ### Command reference
@@ -894,25 +894,25 @@ Move worktrees to expected paths. Relocates worktrees whose path doesn't match t
 Preview what would be moved:
 
 ```console
-wt step relocate --dry-run
+$ wt step relocate --dry-run
 ```
 
 Move all mismatched worktrees:
 
 ```console
-wt step relocate
+$ wt step relocate
 ```
 
 Auto-commit and clobber blockers (never fails):
 
 ```console
-wt step relocate --commit --clobber
+$ wt step relocate --commit --clobber
 ```
 
 Move specific worktrees:
 
 ```console
-wt step relocate feature bugfix
+$ wt step relocate feature bugfix
 ```
 
 ### Swap handling
@@ -1008,13 +1008,13 @@ worktree is gone.
 Arguments after `--` are the program and its arguments, run directly, no shell.
 
 ```console
-wt step tether -- npm run dev
+$ wt step tether -- npm run dev
 ```
 
 For pipes, redirects, variables, or globs, wrap in `sh -c`:
 
 ```console
-wt step tether -- sh -c 'PORT=$P npm run dev | tee dev.log'
+$ wt step tether -- sh -c 'PORT=$P npm run dev | tee dev.log'
 ```
 
 To run the command from a subdirectory, pass the global `-C` flag (teardown
@@ -1022,7 +1022,7 @@ still watches the worktree root, so a server launched with a relative `-C` is
 torn down with the worktree):
 
 ```console
-wt step tether -C frontend -- npm run dev
+$ wt step tether -C frontend -- npm run dev
 ```
 
 ### Examples
