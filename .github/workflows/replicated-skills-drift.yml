@@ -7,8 +7,6 @@ on:
       - "scripts/check_replicated_skills.sh"
       - "scripts/replicated-skills.json"
       - ".github/workflows/replicated-skills-drift.yml"
-  schedule:
-    - cron: "0 9 * * 1"
   workflow_dispatch:
 
 permissions:
