@@ -55,6 +55,12 @@ Self-contained skills covering the design-doc lifecycle: verify a design before 
 
 `anneal` vendors copies of `improve-codebase-architecture`'s LANGUAGE.md (architectural vocabulary) and `grill-with-docs`'s ADR-FORMAT.md — see [Skill Self-Containment](#skill-self-containment).
 
+### Writing
+
+| Skill | Purpose |
+| --- | --- |
+| `blog-antipatterns` | Review a markdown blog post against Michael Lynch's [Anti-Patterns in Software Blogging](https://refactoringenglish.com/blog/anti-patterns-software-blogging/) — meandering intros and preamble, assumed reader knowledge, links standing in for explanation, sequel openings, excessive formality, and mobile overflow / low-contrast text. Names the post's reference reader first, then reports each finding with its line and a paste-ready rewrite; rendering issues markdown can't settle become targeted manual checks. Read-only. |
+
 ## Replicated Skills
 
 Copied verbatim from their source repos — replicating third-party skills (after reading them) reduces prompt-injection risk versus installing from a remote source that can change underneath you.
