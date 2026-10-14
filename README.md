@@ -22,6 +22,10 @@ Updates all installed skills; pass a name to update one (`bunx skills update des
 
 Every skill in this repo installs standalone. Cross-skill file references (`../other-skill/DOC.md`) are an antipattern: the [skills CLI](https://github.com/vercel-labs/skills) installs skills individually (`--skill <name>`, `skills use`, direct skill URLs) with no dependency resolution, so a link into a sibling skill directory dangles unless the whole repo happens to be installed. Shared docs are instead vendored into each skill that needs them, marked with a provenance comment (`<!-- Vendored verbatim from ... -->`). Vendored copies are updated by re-copying their source, never by editing in place.
 
+## Security Scanning
+
+Pull requests that add or modify a skill run [cisco-ai-skill-scanner](https://github.com/cisco-ai-defense/skill-scanner) over the changed skills in static mode (YAML/YARA rules plus behavioral dataflow, no LLM). The [scan workflow](.github/workflows/skill-scan.yml) posts the results as a PR comment and fails on HIGH or CRITICAL findings. `bash scripts/scan_skills.sh [skill...]` reproduces the scan locally; the policy is `scripts/skill-scanner-policy.yaml`. Static rules miss semantic risks such as the indirect-prompt-injection exposure the skills.sh audits flag, so treat a clean scan as a floor, not a verdict.
+
 ## Original Skills
 
 ### Autoresearch

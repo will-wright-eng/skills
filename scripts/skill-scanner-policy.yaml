@@ -1,0 +1,5 @@
+policy_name: will-wright-eng-skills
+preset_base: balanced
+disabled_rules:
+  # Metadata nag rather than a security signal, and replicated skills can't gain a frontmatter field without drifting from upstream
+  - MANIFEST_MISSING_LICENSE
