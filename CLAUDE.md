@@ -14,7 +14,10 @@ This repo uses [prek](https://github.com/j178/prek) (a pre-commit-compatible run
 prek run --all-files   # lint: markdownlint (--fix, non-blocking), codespell, shellcheck, shfmt (-w), whitespace/EOF fixers, agentskills spec validation
 prek install           # one-time hook setup
 bash scripts/check_replicated_skills.sh [skill...]   # diff replicated skills against upstream; exit 1 on drift
+bash scripts/scan_skills.sh [skill...]               # static security scan (cisco-ai-skill-scanner, no LLM); exit 1 on HIGH/CRITICAL
 ```
+
+`.github/workflows/skill-scan.yml` runs `scan_skills.sh` on PRs over the skills the PR adds or modifies and upserts a sticky PR comment with the findings. The scanner version is pinned in the script; rule tuning lives in `scripts/skill-scanner-policy.yaml`.
 
 Skill directories are validated against the [agentskills.io spec](https://agentskills.io/specification) via `bash scripts/validate_skill.sh skills/<name>` — run locally by the `agentskills-validate` prek hook (requires `uv`) and in CI by `.github/workflows/validate-skills.yml`. The script strips Claude Code frontmatter extensions (`argument-hint`, `context`, etc. — see `CLAUDE_CODE_FIELDS` in the script) from a temp copy before running `uvx --from skills-ref agentskills validate`, since the spec disallows them; skills using those fields are a deliberate spec deviation and can't be uploaded to claude.ai as-is.
 
