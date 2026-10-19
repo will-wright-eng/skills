@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Repo Is
 
-A collection of Claude Code skills, packaged as a plugin (`.claude-plugin/plugin.json`, name `will-wright-eng-skills`) and installable via `bunx skills add https://github.com/will-wright-eng/skills`. There is no build or test suite — everything is markdown.
+A collection of Claude Code skills, packaged as a plugin (`.claude-plugin/plugin.json`, name `will-wright-eng-skills`) and installable via `bunx --bun skills add https://github.com/will-wright-eng/skills`. There is no build or test suite — everything is markdown.
 
 ## Commands
 

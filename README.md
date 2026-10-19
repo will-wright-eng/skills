@@ -13,10 +13,10 @@ This command uses the [vercel-labs/skills](https://github.com/vercel-labs/skills
 ## Update
 
 ```bash
-bunx skills update
+bunx --bun skills update
 ```
 
-Updates all installed skills; pass a name to update one (`bunx skills update design-readiness`). The CLI has no version pinning — `update` re-fetches whatever is at the head of each source repo — so review the diff after updating.
+Updates all installed skills; pass a name to update one (`bunx --bun skills update design-readiness`). The CLI has no version pinning — `update` re-fetches whatever is at the head of each source repo — so review the diff after updating.
 
 ## Skill Self-Containment
 
