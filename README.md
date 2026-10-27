@@ -57,7 +57,7 @@ Self-contained skills covering the design-doc lifecycle: verify a design before 
 | `anneal` | Carve a god module into stable and volatile pieces along evidence from git history — hotspot ranking via the [hc](https://github.com/will-wright-eng/hc) CLI (raw-git fallback when absent), a three-axis autopsy of the target file, a seam-by-seam interview, and a strangler-fig migration plan with a measurable baseline. |
 | `prune-comments` | Aggressively delete comment narration that restates the code — including "pseudo-why" comments whose reason is already visible and step-heading comments over blocks — and condense verbose why-comments and doc comments to terse technical language; doubt resolves toward deletion. Scoped to the diff against a base branch by default (path sweep on request), optionally driven under a target comment ratio, never touching semantic comments (directives, pragmas, license headers) or genuine why-comments, and modifying comments only: never code, never markdown. |
 
-`anneal` vendors copies of `improve-codebase-architecture`'s LANGUAGE.md (architectural vocabulary) and `grill-with-docs`'s ADR-FORMAT.md — see [Skill Self-Containment](#skill-self-containment).
+`anneal` vendors a copy of `domain-modeling`'s ADR-FORMAT.md, plus LANGUAGE.md (architectural vocabulary), originally from `improve-codebase-architecture` and now maintained here since upstream folded it into `codebase-design` — see [Skill Self-Containment](#skill-self-containment).
 
 ### Writing
 
@@ -77,10 +77,11 @@ From [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/e
 
 | Skill | Purpose |
 | --- | --- |
-| `improve-codebase-architecture` | Surface deepening opportunities — refactors that turn shallow modules into deep ones, using a fixed architectural vocabulary. |
-| `grill-with-docs` | Interview-style session that stress-tests a plan against the project's domain language and updates `CONTEXT.md` / ADRs inline as decisions crystallise. |
+| `improve-codebase-architecture` | Scan for deepening opportunities — refactors that turn shallow modules into deep ones — present them as a visual HTML report, then grill through whichever one you pick. User-invoked only. |
+| `codebase-design` | Shared deep-module vocabulary (module, interface, depth, seam, adapter, leverage, locality) and principles, plus guides for deepening a cluster by dependency category and designing an interface several ways in parallel. |
+| `domain-modeling` | Build and sharpen a project's domain model — challenge terms against `GLOSSARY.md`, update it inline as terms resolve, and offer ADRs only for hard-to-reverse, surprising trade-offs. |
 
-Upstream, `improve-codebase-architecture` linked to `grill-with-docs` for its `CONTEXT.md` and ADR format docs; this repo vendors copies of those docs into the skill instead (see [Skill Self-Containment](#skill-self-containment)). The two repointed link paths are the only local deviation from the replicated source.
+Upstream, `improve-codebase-architecture` is composed from other skills: it calls `codebase-design`, `grilling`, and `domain-modeling` through the Skill tool, so all four are replicated together. This is a deliberate exception to [Skill Self-Containment](#skill-self-containment) — installing `improve-codebase-architecture` on its own leaves those calls unresolved. `improve-codebase-architecture` and `domain-modeling` read and write `GLOSSARY.md`, where this repo's design skills use `CONTEXT.md`.
 
 ### Productivity
 
@@ -88,15 +89,7 @@ From [mattpocock/skills](https://github.com/mattpocock/skills/blob/main/skills/p
 
 | Skill | Purpose |
 | --- | --- |
-| `grill-me` | Relentless, one-question-at-a-time interview that stress-tests a plan or design before you build, recommending an answer for each decision and exploring the codebase when it can answer a question itself. |
-
-### Communication
-
-From [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman/blob/main/skills/caveman/SKILL.md).
-
-| Skill | Purpose |
-| --- | --- |
-| `caveman` | Ultra-compressed response mode — cuts token usage ~75% by stripping articles, filler, and hedging while keeping full technical accuracy. Supports `lite` / `full` / `ultra` and 文言文 (`wenyan-*`) intensity levels. |
+| `grilling` | Relentless interview that stress-tests a plan, decision, or idea — maps the decisions as a tree and asks every currently answerable question in numbered rounds with a recommended answer for each, dispatching sub-agents to look up facts instead of asking. |
 
 ### Code Style
 
@@ -104,7 +97,7 @@ From [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail/blob/m
 
 | Skill | Purpose |
 | --- | --- |
-| `ponytail` | Lazy senior dev mode — climbs a ladder (YAGNI → reuse → stdlib → native platform → installed dep → one line → minimum) before writing code, never cutting validation, error handling, security, or accessibility. Supports `lite` / `full` / `ultra` intensity levels. Pairs with `caveman`: ponytail governs the code, caveman governs the prose. |
+| `ponytail` | Lazy senior dev mode — the smallest change that fully solves the task, climbing a ladder (YAGNI → reuse → stdlib/platform → installed dep → one line → minimum) before writing code, never cutting validation, error handling, security, or accessibility. Non-trivial logic leaves a small test, and each reply closes with what was skipped and any risk. Supports `lite` / `full` / `ultra` intensity levels. |
 
 ### Coding Guidelines
 

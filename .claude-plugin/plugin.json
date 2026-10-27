@@ -11,9 +11,9 @@
     "./skills/prune-comments",
     "./skills/blog-antipatterns",
     "./skills/improve-codebase-architecture",
-    "./skills/grill-with-docs",
-    "./skills/grill-me",
-    "./skills/caveman",
+    "./skills/codebase-design",
+    "./skills/domain-modeling",
+    "./skills/grilling",
     "./skills/karpathy-guidelines",
     "./skills/ponytail",
     "./skills/worktrunk"

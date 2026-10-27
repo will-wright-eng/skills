@@ -1,4 +1,4 @@
-<!-- Vendored verbatim from skills/improve-codebase-architecture/LANGUAGE.md so anneal installs standalone (the skills CLI has no cross-skill dependency resolution). Update by re-copying the source, not by editing here. -->
+<!-- Vendored from improve-codebase-architecture/LANGUAGE.md (mattpocock/skills) so anneal installs standalone. Upstream has since folded this vocabulary into the codebase-design skill, so no source remains to re-copy from: this copy is now maintained here. -->
 
 # Language
 

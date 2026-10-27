@@ -13,7 +13,7 @@ repos:
       # Replicated skills are byte-for-byte upstream copies; keep every fixer off them.
       # Mirror of scripts/replicated-skills.json — add new replicated skills to both.
       - id: end-of-file-fixer
-        exclude: &replicated_skills ^skills/(caveman|grill-me|grill-with-docs|improve-codebase-architecture|karpathy-guidelines|ponytail|worktrunk)/
+        exclude: &replicated_skills ^skills/(codebase-design|domain-modeling|grilling|improve-codebase-architecture|karpathy-guidelines|ponytail|worktrunk)/
       - id: pretty-format-json
         args: [--autofix, --no-ensure-ascii, --no-sort-keys]
       - id: trailing-whitespace

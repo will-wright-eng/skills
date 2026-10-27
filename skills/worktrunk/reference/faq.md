@@ -55,7 +55,7 @@ Git TUIs operate on a single repository. Worktrunk manages multiple worktrees, r
 
 Worktrees share one `.git`. Each adds a checkout of the tracked files, plus whatever gitignored build output you copy in.
 
-On APFS, btrfs, and XFS (not ext4 or NTFS), [`wt step copy-ignored`](https://worktrunk.dev/step/#wt-step-copy-ignored--copy-on-write) reflinks that output, so a new worktree shares the primary worktree's disk blocks. A later build rewrites only what changed, and the rest stays shared. On one machine, 56 worktrees of a Rust repository with a 40GB `target/` came to 2.6TB by `du` and 0.7TB on disk.
+On APFS, btrfs, and XFS (not ext4 or NTFS), [`wt step copy-ignored`](https://worktrunk.dev/step/#wt-step-copy-ignored--copy-on-write) reflinks that output, so a new worktree shares the primary worktree's disk blocks. A later build rewrites only what changed, and the rest stays shared.
 
 ## Does Worktrunk support stacked branches?
 
@@ -93,9 +93,7 @@ Three verbosity levels. Each is a superset of the previous one.
 | `-v` | + Info: hook output, alias template variable resolution | — | Debugging hooks/aliases |
 | `-vv` | Same as `-v` | + `trace.log`, `trace.jsonl`, `subprocess.log`, `diagnostic.md` | Filing a bug |
 
-At `-vv`, debug-level records (command lines, in-process spans, bounded subprocess preview) route to `trace.log` instead of stderr — so the terminal stays readable while the deep trace lands on disk. A one-line pointer on stderr shows where the files went.
-
-The `-vv` files have distinct audiences: `trace.log` is the human trace (bounded, gistable), `trace.jsonl` the same records for machines, `subprocess.log` the raw uncapped subprocess output, and `diagnostic.md` a bug-report bundle. Each is described in [`wt config state logs`](https://worktrunk.dev/config/#wt-config-state-logs).
+With `-vv`, stderr shows the log directory. See [`wt config state logs`](https://worktrunk.dev/config/#wt-config-state-logs) for the file formats.
 
 `RUST_LOG` overrides the flag baseline when set (`RUST_LOG=debug wt -v` lifts `-v` to debug-on-stderr).
 
@@ -115,11 +113,12 @@ Created by `wt switch <branch>` when switching to a branch that doesn't have a w
 |------|------------|---------|
 | `~/.config/worktrunk/config.toml` | `wt config create` | User preferences |
 | `~/.config/worktrunk/approvals.toml` | Approving project commands | Approved hook and alias commands |
+| `~/.codex/worktrunk-commit-instructions.txt` | Accepting first-run Codex commit setup | Minimal Codex instructions used by the saved commit command |
 | `.config/wt.toml` | `wt config create --project` | Project hooks (checked into repo) |
 
 User config location: `$XDG_CONFIG_HOME/worktrunk/` (or `~/.config/worktrunk/`) on Linux/macOS, `%APPDATA%\worktrunk\` on Windows.
 
-**To remove:** Delete directly. User config: `rm ~/.config/worktrunk/config.toml`. Project config: `rm .config/wt.toml` (and commit).
+**To remove:** Delete directly. User config: `rm ~/.config/worktrunk/config.toml`. Project config: `rm .config/wt.toml` (and commit). Codex instructions: `rm ~/.codex/worktrunk-commit-instructions.txt` after changing or removing the saved Codex commit command. That command fails if the file is removed first.
 
 ### 3. Shell integration
 
@@ -134,6 +133,7 @@ Worktrunk stores repository state, caches, and logs under `.git/`:
 | Location | Purpose | Created by |
 |----------|---------|------------|
 | `git config worktrunk.*` | Cached default branch, switch history, branch markers, custom variables | Various commands |
+| `refs/wt-backup/<branch>` | [Squash backups](https://worktrunk.dev/step/#wt-step-squash--recovering-staged-changes); preserved by state clearing | `wt step squash`, `wt merge` |
 | `.git/wt/cache/{kind}/*.json` | Cached CI status, the largest PR/MR number seen (sizes the `wt list` CI column), and git command results (merge-tree, integration probes, diff stats, ancestry checks, ahead/behind counts, merge bases) | `wt list`, `wt merge`, `wt remove` |
 | `.git/wt/cache/summary/{branch}/{hash}.json` | Cached LLM branch summaries, content-addressed by diff hash | `wt list --full`, `wt switch` (when `[list] summary = true`) |
 | `.git/wt/cache/picker-preview/*.json` | Rendered preview panes for the interactive picker | `wt switch` |
@@ -144,10 +144,11 @@ Worktrunk stores repository state, caches, and logs under `.git/`:
 | `.git/wt/logs/subprocess.log` | Raw uncapped subprocess stdout/stderr (may be multi-MB) | Running with `-vv` |
 | `.git/wt/logs/diagnostic.md` | Diagnostic report for issue reporting (leads with the performance profile) | Running with `-vv` |
 | `.git/wt/trash/<name>-<timestamp>` | Staged worktree contents pending background deletion | `wt remove` |
+| `.git/wt/trash.lock` | Lock for background trash deletion | `wt remove` |
 
 None of this is tracked by git or pushed to remotes.
 
-**To remove:** `wt config state clear` removes all repository data: config keys, caches, markers, hints, variables, logs, and stale trash. It prompts before removing anything worktrunk can't recompute, unless you pass `--yes`.
+**To remove:** `wt config state clear` removes repository state: config keys, caches, markers, hints, variables, logs, and stale trash. It prompts before removing anything worktrunk can't recompute, unless you pass `--yes`.
 
 ### 5. Agent integrations
 
@@ -155,19 +156,20 @@ Created by the `wt config plugins <agent>` install commands. Each writes outside
 
 | File | Created by | Purpose |
 |------|------------|---------|
-| `~/.config/opencode/plugins/worktrunk.ts` | `wt config plugins opencode install` | Activity markers in `wt list` |
-| `~/.omp/agent/hooks/pre/worktrunk.ts` | `wt config plugins pi install` | Activity markers in `wt list` |
+| `~/.config/opencode/plugins/worktrunk.ts` | `wt config plugins opencode install` | Activity markers in `wt list`; OpenCode 2 worktrees through `wt` |
+| `~/.pi/agent/extensions/worktrunk.ts` | `wt config plugins pi install` | Activity markers in `wt list` |
+| `~/.omp/agent/hooks/pre/worktrunk.ts` | `wt config plugins omp install` | Activity markers in `wt list` |
 | `~/.claude/settings.json` | `wt config plugins claude install-statusline` | Adds a `statusLine` entry running `wt list statusline --format=claude-code` |
 
-The OpenCode path follows `$OPENCODE_CONFIG_DIR` > `$XDG_CONFIG_HOME/opencode` > `~/.config/opencode`; the Pi path follows `$PI_CONFIG_DIR`, `$OMP_PROFILE`/`$PI_PROFILE`, and `$PI_CODING_AGENT_DIR`; Claude Code's follows `$CLAUDE_CONFIG_DIR`. The two plugin files are worktrunk's own, so install writes them whole. `settings.json` belongs to Claude Code, so install merges the `statusLine` key into it and leaves the rest untouched.
+The OpenCode path follows `$OPENCODE_CONFIG_DIR` > `$XDG_CONFIG_HOME/opencode` > `~/.config/opencode`; the Pi path follows `$PI_CODING_AGENT_DIR`; the oh-my-pi path follows `$PI_CONFIG_DIR`, `$OMP_PROFILE`/`$PI_PROFILE`, and `$PI_CODING_AGENT_DIR`; Claude Code's follows `$CLAUDE_CONFIG_DIR`. The three plugin files are worktrunk's own, so install writes them whole (and uninstall removes them whole). `settings.json` belongs to Claude Code, so install merges the `statusLine` key into it and leaves the rest untouched.
 
 `wt config plugins claude install` and `wt config plugins codex install` write nothing themselves — they run `claude` / `codex` to register the marketplace and install the plugin, and each CLI records that in its own config (`~/.claude/plugins/`, `~/.codex/config.toml`).
 
-**To remove:** `wt config plugins opencode uninstall` and `wt config plugins pi uninstall` delete their plugin file. `wt config plugins claude uninstall` / `codex uninstall` remove the plugin and marketplace through that CLI. The statusline entry is removed by editing `settings.json`.
+**To remove:** `wt config plugins opencode uninstall`, `wt config plugins pi uninstall`, and `wt config plugins omp uninstall` delete their plugin file. `wt config plugins claude uninstall` / `codex uninstall` remove the plugin and marketplace through that CLI. The statusline entry is removed by editing `settings.json`.
 
 ### 6. Temporary files (automatic)
 
-Worktrunk creates temporary Git index copies named `$TMPDIR/worktrunk-temp-index-*`. `wt list`, `wt list statusline`, `wt step diff`, `wt step commit --dry-run`, and `wt switch` use them to inspect staged or working-tree state without changing the real index. `wt list` also creates a `$TMPDIR/worktrunk-list-objects-*` directory so its merge probes do not add unreachable objects to the repository. When the system temp directory is unavailable, both fall back to Git's metadata: `worktrunk-list-objects-*` under the Git common directory and `worktrunk-temp-index-*` under the worktree's Git directory. A normal exit removes these files and directories; an interrupted process can leave one behind for manual cleanup.
+Worktrunk creates temporary Git index copies named `$TMPDIR/worktrunk-temp-index-*`. `wt list`, `wt list statusline`, `wt step diff`, `wt step commit --dry-run`, and `wt switch` use them to inspect staged or working-tree state without changing the real index. `wt list` also creates a `$TMPDIR/worktrunk-list-objects-*` directory so its merge probes do not add unreachable objects to the repository. When the system temp directory is unavailable, both fall back to Git's metadata: `worktrunk-list-objects-*` under the Git common directory and `worktrunk-temp-index-*` under the worktree's Git directory. A normal exit removes these files and directories. Later commands that create a temporary index reclaim index copies and their lock files older than one hour; object directories left by an interrupted process may still need manual cleanup.
 
 ### What Worktrunk does NOT create
 
@@ -207,17 +209,18 @@ A branch checked out in a second worktree is retained regardless, `-D` included.
 ### Other cleanup
 
 - `wt merge` / `wt step push` — the target branch's checked-out worktree is updated to the merged commits, so a file those commits delete disappears from it, and an ignored file at a path they track is overwritten — the same result a `git merge` run in that worktree would produce. Uncommitted changes at paths the merge doesn't touch stay in place, staged or not; one at a path it does touch refuses the merge upfront, naming the file
-- `wt remove` — besides the worktree being removed, two cleanup mechanisms run. The removed worktree's own `git fsmonitor--daemon` (git's per-worktree filesystem watcher under `core.fsmonitor=true`, which would leak once its worktree is gone) is sent `git fsmonitor--daemon stop`, then force-terminated (`SIGTERM`, then `SIGKILL`) via the PID resolved from its IPC socket if it didn't exit. A background sweep then deletes `.git/wt/trash/` entries older than 24 hours (directories orphaned when a previous background removal was interrupted) and terminates fsmonitor daemons whose worktree no longer exists (orphans from `git worktree remove`, `rm -rf`, or a crashed `wt`)
-- `wt config state clear` — removes all worktrunk data from `.git/` (config keys, caches, markers, hints, variables, logs, stale trash)
-- `wt config shell install` — when migrating an integration to a new location, removes the file left at the old one: fish `conf.d/wt.fish` (now `functions/wt.fish`) and nushell wrappers stranded under `<config-dir>/vendor/autoload` (now `<data-dir>/vendor/autoload`). The old path is where worktrunk's own wrapper lived and is named after the command being installed, so it's taken back whole without reading it — a `conf.d/wt.fish` left in place would be sourced at startup and shadow the new wrapper anyway. Only that exact filename is touched, and each removal is printed
-- `wt config shell uninstall` — removes integration lines from bash/zsh/PowerShell rc files, and deletes worktrunk's wrapper and completion files (fish `functions/`, `conf.d/`, and `completions/`; nushell `vendor/autoload`). Uninstall takes no command name, so it lists those directories and recognizes files by worktrunk's own content markers, whatever binary name they were installed under; files without the markers are left alone. An rc file belongs to the user, so a line qualifies only where it runs the init command: one that merely mentions it, inside a comment, an `echo`, or an alias body, stays. Every line uninstall does take is printed, before removal and again after
-- `wt config plugins opencode uninstall` / `wt config plugins pi uninstall` — deletes that agent's `worktrunk.ts` plugin file. Only worktrunk's own file is touched; the rest of the agent's plugin directory is left alone
+- `wt remove` / `wt step prune` — unregister a stale worktree (`⊟` in `wt list`) by deleting its `.git/worktrees/<id>` entry, as `git worktree prune` does, but for that worktree only. Files still in its directory stay. An entry whose index holds staged changes, or with a rebase, merge, or other operation in progress, is kept unless `wt remove --force` names it, since `git worktree repair` can restore it only while the entry exists
+- `wt remove` — also stops the removed worktree's `git fsmonitor--daemon` (under `core.fsmonitor=true`), and resumes deleting `.git/wt/trash/` entries an interrupted removal left behind, along with fsmonitor daemons whose worktree no longer exists
+- `wt config state clear` — clears config keys, caches, markers, hints, variables, logs, and stale trash
+- `wt config shell install` — replaces an existing fish or Nushell wrapper file whole, and removes one an older version installed at a previous location (fish `conf.d/wt.fish`, Nushell `<config-dir>/vendor/autoload/wt.nu`), printing each removal; [Files created](https://worktrunk.dev/shell-integration/#files-created) names the file each shell gets
+- `wt config shell uninstall` — removes recognized initialization lines from bash/zsh/PowerShell rc files, and deletes wrapper and completion files carrying worktrunk's content markers (fish `functions/`, `conf.d/`, and `completions/`; nushell `vendor/autoload`). Customized initialization lines must be removed manually. Every removed line is printed
+- `wt config plugins opencode uninstall` / `wt config plugins pi uninstall` / `wt config plugins omp uninstall` — deletes that agent's `worktrunk.ts` plugin file. Only worktrunk's own file is touched; the rest of the agent's plugin directory is left alone
 
 See [What files does Worktrunk create?](#what-files-does-worktrunk-create) for details.
 
 ## What commands does Worktrunk execute?
 
-Worktrunk runs `git` commands internally and optionally runs `gh` (GitHub) or `glab` (GitLab) for CI status. Beyond that, user-defined commands execute in four contexts:
+Worktrunk runs `git` commands internally and optionally runs the forge CLI (`gh`, `glab`, `tea`, or `az`) for CI status. Beyond that, user-defined commands execute in four contexts:
 
 1. **User hooks** (`~/.config/worktrunk/config.toml`) — Personal automation for all repositories
 2. **Project hooks** (`.config/wt.toml`) — Repository-specific automation
@@ -245,7 +248,7 @@ Use `--yes` to bypass prompts (useful for CI/automation).
 
 ### Command log
 
-All hook executions and LLM commands are recorded in `.git/wt/logs/commands.jsonl` — one JSON object per line. Fields: `ts` (timestamp), `wt` (the wt command that triggered it), `label` (what ran, e.g., `pre-merge user:lint`), `cmd` (shell command), `exit` (exit code, `null` for background), `dur_ms` (duration, `null` for background). The file rotates to `commands.jsonl.old` at 1MB, bounding storage to ~2MB.
+All hook executions and LLM commands are recorded in `.git/wt/logs/commands.jsonl`, one JSON object per line; [`wt config state logs`](https://worktrunk.dev/config/#wt-config-state-logs) lists the fields.
 
 View the log with `wt config state logs get`, or query directly:
 
@@ -265,7 +268,7 @@ Yes. Core commands, shell integration, and tab completion work in both Git Bash 
 
 **Git for Windows required** — Hooks use bash syntax and execute via Git Bash, so [Git for Windows](https://gitforwindows.org/) must be installed even when PowerShell is the interactive shell.
 
-The `wt switch` interactive picker runs on Windows too, on [skim](https://github.com/skim-rs/skim)'s crossterm backend.
+The `wt switch` interactive picker runs on Windows too.
 
 ## How does Worktrunk determine the default branch?
 
@@ -277,7 +280,7 @@ For full details on the detection mechanism, see `wt config state default-branch
 
 ## My `for-each` or `--execute` alias prints the same value in every worktree
 
-The alias body rendered once at dispatch, baking the variable to the invoking worktree's value before the nested `wt` command iterated. See [deferring expansion to a nested `wt` command](https://worktrunk.dev/extending/#deferring-expansion-to-a-nested-wt-command) for how to confirm it and how to defer the variable.
+The alias body rendered once at dispatch, baking the variable to the invoking worktree's value before the nested `wt` command iterated. See [nesting templates](https://worktrunk.dev/extending/#nesting-templates) for how to pass the template through unrendered.
 
 ## What system dependencies are required?
 
@@ -289,7 +292,7 @@ Installing with Cargo and the default features also requires a C99 compiler for 
 cargo install worktrunk --no-default-features --features cli
 ```
 
-This disables bash syntax highlighting in command output but keeps all core functionality. The syntax highlighting feature requires C99 compiler support and can fail on older systems or minimal Docker images.
+This disables bash syntax highlighting in command output but keeps all core functionality.
 
 ## How can I contribute?
 
