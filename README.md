@@ -97,7 +97,7 @@ From [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail/blob/m
 
 | Skill | Purpose |
 | --- | --- |
-| `ponytail` | Lazy senior dev mode — climbs a ladder (YAGNI → reuse → stdlib → native platform → installed dep → one line → minimum) before writing code, never cutting validation, error handling, security, or accessibility. Supports `lite` / `full` / `ultra` intensity levels. |
+| `ponytail` | Lazy senior dev mode — the smallest change that fully solves the task, climbing a ladder (YAGNI → reuse → stdlib/platform → installed dep → one line → minimum) before writing code, never cutting validation, error handling, security, or accessibility. Non-trivial logic leaves a small test, and each reply closes with what was skipped and any risk. Supports `lite` / `full` / `ultra` intensity levels. |
 
 ### Coding Guidelines
 
