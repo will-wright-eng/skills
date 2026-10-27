@@ -5,7 +5,7 @@ description: Decompose a god module into stable and volatile pieces whose bounda
 
 <what-to-do>
 
-Help me carve a god module into pieces whose boundaries match how the code actually changes. Locate the target with hot/cold analysis (or start from the file I name), autopsy it along three independent evidence axes, then interview me through each proposed seam — one question at a time, with your recommended answer — before writing anything. The deliverable is a strangler-fig migration plan with a baseline measurement, written only when I confirm it.
+Help me carve a god module into pieces whose boundaries match how the code actually changes. Locate the target with hot/cold analysis (or start from the file I name), autopsy it along three independent evidence axes, then interview me through each proposed seam — one question at a time, with your recommended answer, as a quick pick when the options are discrete and as a discussion when they aren't — before writing anything. The deliverable is a strangler-fig migration plan with a baseline measurement, written only when I confirm it.
 
 The goal is not "smaller files." It is: dependencies point from volatile to stable, so future churn lands in one quarantined place instead of radiating through the codebase.
 
@@ -83,6 +83,24 @@ Work through proposed seams one question at a time, waiting for my answer, recom
 - If I reject a seam with a load-bearing reason, offer to record it as an ADR (see [ADR-FORMAT.md](./ADR-FORMAT.md)) so a future session doesn't re-propose it. Skip ephemeral reasons.
 
 Collect resolutions as we go; write nothing yet.
+
+### Question format
+
+This applies to every question in the session, from the Phase 1 file pick to the Phase 5 plan confirmation. Pick the format from the shape of the decision — the lightest one that carries it:
+
+- **Select one** — the options are mutually exclusive and each one's consequence fits in a sentence: which file to autopsy (absolute numbers in each option's description), a seam where the axes agree (incidental — cut here, or essential — keep together), a piece's name, confirming the plan (shown in full before the call).
+- **Select many** — the answer is a subset of a known list: which symbols or consumer slices move with an extracted piece, which seams go in the first migration slice.
+- **Discuss** — seams where the axes disagree, the tangled center of the internal graph, and any rejection whose reason may be load-bearing enough for an ADR. Lead with your recommendation, then the evidence and alternatives in prose, take a free-form answer, and once it narrows to discrete options, lock the decision in with a select-one.
+
+Escalate a quick pick to Discuss when my free-text answer doesn't map onto the options or shows the question was framed wrong.
+
+For select-one and select-many, use the harness's structured question tool when it has one (Claude Code: `AskUserQuestion`); otherwise render a numbered list and accept numbers or free text. Either way:
+
+- Two to four options, recommended option first and labeled "(Recommended)". Free text is always available, so never spend an option on "Other" or "Defer".
+- Each option's description states what it changes in the decomposition if it's chosen.
+- The question stands alone — include the evidence (which axes agree, `path:line`, the hc numbers) so I can answer without scrolling back.
+- For select-one choices between concrete shapes — where a seam falls, a piece's interface — use option previews to show them side by side.
+- With the structured tool, independent quick picks may share one call, up to four; Discuss questions and any question another answer depends on go alone.
 
 ## Phase 5: plan
 

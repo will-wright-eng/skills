@@ -5,7 +5,7 @@ description: Audit a design/implementation/proposal markdown document for consis
 
 <what-to-do>
 
-Audit the markdown document I point you at against the codebase and the repo's documented context — Architecture Decision Records (ADRs, typically in `docs/adr/`) and `CONTEXT.md` in the repo root — then interview me — one question at a time, with your recommended answer — until every drifted claim and unresolved design decision is settled. Collect resolutions as we go; do not edit the document during the interview. My interview answers are the approval: when the interview is complete, apply one revised draft of the full document and show me what changed.
+Audit the markdown document I point you at against the codebase and the repo's documented context — Architecture Decision Records (ADRs, typically in `docs/adr/`) and `CONTEXT.md` in the repo root — then interview me — one question at a time, with your recommended answer, as a quick pick when the options are discrete and as a discussion when they aren't — until every drifted claim and unresolved design decision is settled. Collect resolutions as we go; do not edit the document during the interview. My interview answers are the approval: when the interview is complete, apply one revised draft of the full document and show me what changed.
 
 </what-to-do>
 
@@ -58,9 +58,10 @@ Filter honestly: a finding must be a decision whose resolution changes what gets
 
 ## Step 4: interview
 
-Open with the audit summary — counts of drifted claims, unverifiable claims, and open decisions — then work through the findings one question at a time, waiting for my answer before the next:
+Open with the audit summary — counts of drifted claims, unverifiable claims, and open decisions, and how many need discussion versus a quick pick — then work through the findings one question at a time, waiting for my answer before the next:
 
 - **Drifted claim**: show the document's claim, the code's reality (`path:line`), and your recommendation — usually "update the doc", occasionally "the doc is right and the code is what's being changed — confirm?"
+- **Unverifiable claim**: show what you searched for and where; recommend removing it, recasting it as prescriptive, or asking me where it lives.
 - **Open decision**: state the question, the realistic options, and your recommended answer with reasoning.
 - **ADR conflict**: cite the ADR and the contradicting passage; recommend either aligning the document or, if superseding is the intent, stating the supersession explicitly in the document. Updating the ADR itself is out of scope — flag it at close-out.
 - **Terminology drift** that is plainly mechanical — the glossary names the concept and the document just uses a different word — needs no question; fold the alignment into the draft and report it at close-out. Ask only when the document may be deliberately redefining or extending a term.
@@ -68,6 +69,24 @@ Open with the audit summary — counts of drifted claims, unverifiable claims, a
 - If a question can be answered by exploring the codebase, explore instead of asking.
 
 Record each resolution; do not modify the document yet.
+
+### Question format
+
+Pick the format from the shape of the decision, not the finding type — the lightest one that carries it:
+
+- **Select one** — the options are mutually exclusive and each one's consequence fits in a sentence. Most drift fixes, unverifiable claims, and ADR conflicts land here, as do open decisions with two to four clear options.
+- **Select many** — the answer is a subset of a known list: which edge cases need specified behavior, which consumers migrate, which error states surface to the caller.
+- **Discuss** — the options aren't enumerable yet, a trade-off needs more than a sentence per option, or the answer reshapes other findings. Lay out the context, the options with their trade-offs, and your recommendation in prose, and take a free-form answer. Once the discussion narrows to discrete options, lock the decision in with a select-one.
+
+Escalate a quick pick to Discuss when my free-text answer doesn't map onto the options or shows the question was framed wrong.
+
+For select-one and select-many, use the harness's structured question tool when it has one (Claude Code: `AskUserQuestion`); otherwise render a numbered list and accept numbers or free text. Either way:
+
+- Two to four options, recommended option first and labeled "(Recommended)". Free text is always available, so never spend an option on "Other" or "Defer".
+- Each option's description states what changes in the document if it's chosen.
+- The question stands alone — include the evidence (`path:line`, the document's wording) so I can answer without scrolling back.
+- For select-one choices between concrete shapes — interfaces, schemas, payloads — use option previews to show them side by side.
+- With the structured tool, independent quick picks may share one call, up to four; Discuss questions and any question another answer depends on go alone.
 
 ## Step 5: revised draft
 
