@@ -61,9 +61,27 @@ Once the glossary stabilises:
 - **Flagged ambiguities** — anything from phase 2 that stayed unresolved, or whose resolution is worth recording. Confirm the wording.
 - **Example dialogue** — draft last, once terms and relationships are settled. It should demonstrate the boundaries between the trickiest neighbouring concepts. Confirm before writing.
 
+## Question format
+
+Pick the format from the shape of the decision — the lightest one that carries it:
+
+- **Select one** — the options are mutually exclusive and each one's consequence fits in a sentence: the canonical name among the code's synonyms, confirming a drafted definition, a relationship's cardinality, the wording of a flagged ambiguity.
+- **Select many** — the answer is a subset of a known list: which synonyms go on the avoid-list, which of the code's usages a term covers.
+- **Discuss** — the boundary isn't settled yet: a candidate that may be hiding two concepts (or two that may be one), a definition of mine that conflicts with the code, a term I'm using loosely. Probe in prose with concrete scenarios and your recommendation, take a free-form answer, and once the boundary is crisp, confirm the entry with a select-one.
+
+Escalate a quick pick to Discuss when my free-text answer doesn't map onto the options or shows the question was framed wrong.
+
+For select-one and select-many, use the harness's structured question tool when it has one (Claude Code: `AskUserQuestion`); otherwise render a numbered list and accept numbers or free text. Either way:
+
+- Two to four options, recommended option first and labeled "(Recommended)". Free text is always available, so never spend an option on "Other".
+- Each option's description states what gets written to `CONTEXT.md` if it's chosen.
+- The question stands alone — include the evidence (identifier names and `file:line`, never values) so I can answer without scrolling back.
+- For select-one choices between competing entries — two definitions, two ways of splitting a concept — use option previews to show them side by side.
+- With the structured tool, independent quick picks may share one call, up to four — a settled term's name, definition, and avoid-list can go together as three questions. Discuss questions and any question another answer depends on go alone.
+
 ## Rules
 
-- One question at a time. Always state your recommended answer.
+- One question at a time, in the format the decision calls for (see Question format). Always state your recommended answer.
 - Evidence is names and locations, never values. Never reproduce secrets or sensitive configuration values (API keys, tokens, passwords, connection strings) in questions, evidence, or `CONTEXT.md` — refer to them by identifier and `file:line` only.
 - If a question can be answered by exploring the codebase, explore instead of asking.
 - `CONTEXT.md` stays a glossary: no implementation details, no specs, no decisions. Decisions belong in ADRs, not here.

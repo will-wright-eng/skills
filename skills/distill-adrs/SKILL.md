@@ -55,7 +55,7 @@ The fourth test is what separates distillation from planning: implementation doc
 
 ### 3. Confirm one at a time
 
-Present each surviving candidate one at a time, waiting for my verdict before moving to the next. Each proposal includes:
+Present each surviving candidate one at a time, waiting for my verdict before moving to the next, in the format set out under Question format. Each proposal includes:
 
 - the drafted ADR text, ready to write as-is
 - the source: document and section it was distilled from
@@ -75,6 +75,24 @@ When all candidates are processed, report:
 - **Duplicates and conflicts** — candidates already covered by, or contradicting, existing ADRs
 
 Then propose archival: list the source documents whose durable content is now fully captured in ADRs and could be archived or deleted, and the ones that still contain undistilled material. Never delete or move anything yourself — I decide.
+
+## Question format
+
+Pick the format from the shape of the decision — the lightest one that carries it:
+
+- **Select one** — the options are mutually exclusive and each one's consequence fits in a sentence: approving a drafted ADR, or resolving a conflict with an existing one (mark the old ADR superseded, or keep it and drop the candidate).
+- **Select many** — the answer is a subset of a known list: which rejected alternatives are worth recording under Considered Options.
+- **Discuss** — the source document doesn't record the rationale and the ADR needs it from me, the candidate may bundle several decisions, or a conflict where neither record is clearly current. Lay out what the source and the code show, the options, and your recommendation in prose, take a free-form answer, then confirm the resulting draft with a select-one.
+
+Escalate a quick pick to Discuss when my free-text answer doesn't map onto the options or shows the question was framed wrong.
+
+For select-one and select-many, use the harness's structured question tool when it has one (Claude Code: `AskUserQuestion`); otherwise render a numbered list and accept numbers or free text. Either way:
+
+- Two to four options, recommended option first and labeled "(Recommended)". Free text is always available and carries edits, so never spend an option on "Other" or "Edit".
+- Each option's description states what gets written if it's chosen.
+- The question stands alone — include the source section and the code evidence (`path:line`) so I can answer without scrolling back. Show a drafted ADR in full in the message before the call; it's too long for the question itself.
+- For a conflict with an existing ADR, use option previews to show the existing and drafted records side by side.
+- Approvals go one ADR per call — each draft needs reading. With the structured tool, other independent quick picks may share one call, up to four; Discuss questions and any question another answer depends on go alone.
 
 ## References
 
