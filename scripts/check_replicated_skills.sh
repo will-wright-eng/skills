@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Diff each replicated skill against its upstream source (scripts/replicated-skills.json).
-# Usage: check_replicated_skills.sh [--report FILE] [--max-diff-lines N] [SKILL...]
+# Usage: check_replicated_skills.sh [--stat] [--report FILE] [--max-diff-lines N] [SKILL...]
+# --stat prints +added -removed per drifted skill instead of the diff.
 # Exit 1 on drift, 2 on error. Manifest "ignore" lists files vendored from sibling skills.
 set -euo pipefail
 
@@ -9,6 +10,7 @@ repo_root=$(cd "$script_dir/.." && pwd)
 manifest="$script_dir/replicated-skills.json"
 report=""
 max_lines=300
+stat=0
 selected=""
 
 while [ $# -gt 0 ]; do
@@ -17,12 +19,16 @@ while [ $# -gt 0 ]; do
       report="$2"
       shift 2
       ;;
+    --stat)
+      stat=1
+      shift
+      ;;
     --max-diff-lines)
       max_lines="$2"
       shift 2
       ;;
     -h | --help)
-      sed -n '2,4p' "$0" | sed 's/^# //'
+      sed -n '2,5p' "$0" | sed 's/^# //'
       exit 0
       ;;
     *)
@@ -96,7 +102,9 @@ while IFS= read -r skill; do
   else
     drifted="$drifted$skill"$'\n'
     total=$(wc -l <<<"$diff_out" | tr -d ' ')
-    echo "DRIFTED  $skill  ($repo@$short, $total diff lines)"
+    size="$total diff lines"
+    [ "$stat" -eq 0 ] || size=$(awk '/^(--- upstream:|\+\+\+ local:)/ {next} /^\+/ {a++} /^-/ {d++} END {printf "+%d -%d", a, d}' <<<"$diff_out")
+    echo "DRIFTED  $skill  ($repo@$short, $size)"
     shown="$diff_out"
     note=""
     if [ "$max_lines" -gt 0 ] && [ "$total" -gt "$max_lines" ]; then
@@ -105,7 +113,7 @@ while IFS= read -r skill; do
     fi
     body="$body"$'\n'"- ❌ \`$skill\` drifted from [$repo@$short]($link) (\`$ref\`), $total diff lines"
     body="$body"$'\n\n'"<details><summary><code>$skill</code> diff</summary>"$'\n\n```diff\n'"$shown"$'\n```\n'"$note"$'\n\n</details>\n'
-    [ -n "$report" ] || printf '%s\n' "$diff_out"
+    [ -n "$report" ] || [ "$stat" -eq 1 ] || printf '%s\n' "$diff_out"
   fi
 done <<<"$selected"
 

@@ -13,8 +13,8 @@ This repo uses [prek](https://github.com/j178/prek) (a pre-commit-compatible run
 ```bash
 prek run --all-files   # lint: markdownlint (--fix, non-blocking), codespell, shellcheck, shfmt (-w), whitespace/EOF fixers, agentskills spec validation
 prek install           # one-time hook setup
-bash scripts/check_replicated_skills.sh [skill...]   # diff replicated skills against upstream; exit 1 on drift
-bash scripts/scan_skills.sh [skill...]               # static security scan (cisco-ai-skill-scanner, no LLM); exit 1 on HIGH/CRITICAL
+bash scripts/check_replicated_skills.sh [--stat] [skill...]   # diff replicated skills against upstream (--stat: +/- counts only); exit 1 on drift
+bash scripts/scan_skills.sh [skill...]                        # static security scan (cisco-ai-skill-scanner, no LLM); exit 1 on HIGH/CRITICAL
 ```
 
 `.github/workflows/skill-scan.yml` runs `scan_skills.sh` on PRs over the skills the PR adds or modifies and upserts a sticky PR comment with the findings. The scanner version is pinned in the script; rule tuning lives in `scripts/skill-scanner-policy.yaml`.
