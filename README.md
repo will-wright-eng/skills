@@ -65,6 +65,14 @@ Self-contained skills covering the design-doc lifecycle: verify a design before 
 | --- | --- |
 | `blog-antipatterns` | Review a markdown blog post against Michael Lynch's [Anti-Patterns in Software Blogging](https://refactoringenglish.com/blog/anti-patterns-software-blogging/) — meandering intros and preamble, assumed reader knowledge, links standing in for explanation, sequel openings, excessive formality, and mobile overflow / low-contrast text. Names the post's reference reader first, then reports each finding with its line and a paste-ready rewrite; rendering issues markdown can't settle become targeted manual checks. Read-only. |
 
+### Auditing
+
+| Skill | Purpose |
+| --- | --- |
+| `threads-audit` | Audit whether a repo's recent changes match what was asked of the coding agents — collects the intents from the prompts in captured [Atuin](https://github.com/atuinsh/atuin) threads, across every agent and worktree of the project, and judges each against the net git diff of the same window (last 14 days, since the last tag, or a named base): met, partly met, not met, or contradicted, plus the user's own changes no intent accounts for. Read-only. |
+
+`threads-audit` requires the [`atuin`](https://github.com/atuinsh/atuin) CLI with thread capture on (`atuin threads enable`), plus `git` and `jq`.
+
 ## Replicated Skills
 
 Copied verbatim from their source repos — replicating third-party skills (after reading them) reduces prompt-injection risk versus installing from a remote source that can change underneath you.
