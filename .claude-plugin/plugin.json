@@ -11,6 +11,7 @@
     "./skills/prune-comments",
     "./skills/blog-antipatterns",
     "./skills/threads-audit",
+    "./skills/state-machine-audit",
     "./skills/improve-codebase-architecture",
     "./skills/codebase-design",
     "./skills/domain-modeling",

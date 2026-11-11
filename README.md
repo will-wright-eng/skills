@@ -70,8 +70,13 @@ Self-contained skills covering the design-doc lifecycle: verify a design before 
 | Skill | Purpose |
 | --- | --- |
 | `threads-audit` | Audit whether a repo's recent changes match what was asked of the coding agents — collects the intents from the prompts in captured [Atuin](https://github.com/atuinsh/atuin) threads, across every agent and worktree of the project, and judges each against the net git diff of the same window (last 14 days, since the last tag, or a named base): met, partly met, not met, or contradicted, plus the user's own changes no intent accounts for. Read-only. |
+| `state-machine-audit` | Find a subsystem's explicit and implicit state machines, classify each with evidence, and document states, invariants, and `states × events` transition tables in one living document — retries, duplicate delivery, and races are columns in the table. Proves which invalid states the code can actually reach (cited code path or failing test; the rest goes in an Unverified list), groups findings by root cause, ranks them by impact, then fixes them with regression tests while keeping the document current. |
 
 `threads-audit` requires the [`atuin`](https://github.com/atuinsh/atuin) CLI with thread capture on (`atuin threads enable`), plus `git` and `jq`.
+
+`state-machine-audit` expands a prompt shared by Trevin Chow (@trevin), itself building on Steve Ruiz's (@steveruizok) "find all of the implicit state machines in my app":
+
+![Trevin Chow's post quoting Steve Ruiz, the source prompt for state-machine-audit](docs/steve-ruiz.png)
 
 ## Replicated Skills
 
